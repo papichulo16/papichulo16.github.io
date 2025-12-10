@@ -14,5 +14,5 @@ project_tag: ctfs
 {% endfor %}
 </ul>
 
-[source](www.github.com/papichulo16/magical-kernel/)
+[source](https://www.github.com/papichulo16/magical-kernel/)
 

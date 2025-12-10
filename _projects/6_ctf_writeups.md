@@ -11,5 +11,5 @@ project_tag: ctfs
 
 {{ external_readme | markdownify }}
 
-[source](www.github.com/papichulo16/ctf-stuff/)
+[source](https://www.github.com/papichulo16/ctf-stuff/)
 
