@@ -102,7 +102,7 @@ nav .menu {
   height: 40%;          /* must match width for perfect circle */
   border-radius: 10%;    
   object-fit: cover;     /* no stretching */
-  border: 2px solid white;  /* optional outline */
+  border: 2px solid var(--accent);  /* optional outline */
 }
 
 .home-link:hover {
