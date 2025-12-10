@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <p>Alright so this challenge just started off as an escape from continuing to do the headache that was the challenge vip-blacklist (reasons why are on that writeup, the pain was self inflicted) but it ended up being a really fun challenge and I really enjoyed it.</p>
+
+<p>What this challenge basically does is take your input and then performs a series of operations to then turn your input into hieroglyphs. After reversing the program through Ghidra you’ll see that the flow goes something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>input -&gt; washing_mashine() -&gt; &lt;adds a series of bytes per character&gt; -&gt; runnnn() -&gt; washing_machine() -&gt; output 
+</code></pre></div></div>
+
+<p>So first of all lets talk about the washing machine function, all it does is XOR each character by the character in front of it and then flips it through a procedure (whose name I coined) called a palindromic swap. The Ghidra code looks like this:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">washing_machine</span><span class="p">(</span><span class="n">byte</span> <span class="o">*</span><span class="n">string</span><span class="p">,</span><span class="n">ulong</span> <span class="n">length</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">byte</span> <span class="n">current_char</span><span class="p">;</span>
+  <span class="n">ulong</span> <span class="n">i</span><span class="p">;</span>
+  <span class="n">ulong</span> <span class="n">x</span><span class="p">;</span>
+  <span class="n">byte</span> <span class="n">tmp</span><span class="p">;</span>
+  
+  <span class="n">current_char</span> <span class="o">=</span> <span class="o">*</span><span class="n">string</span><span class="p">;</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">i</span> <span class="o">=</span> <span class="mi">1</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="n">i</span> <span class="o">=</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">current_char</span> <span class="o">=</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">^</span> <span class="n">current_char</span><span class="p">;</span>
+    <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">current_char</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">for</span> <span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="n">length</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">;</span> <span class="n">x</span> <span class="o">=</span> <span class="n">x</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">tmp</span> <span class="o">=</span> <span class="n">string</span><span class="p">[</span><span class="n">x</span><span class="p">];</span>
+    <span class="n">string</span><span class="p">[</span><span class="n">x</span><span class="p">]</span> <span class="o">=</span> <span class="n">string</span><span class="p">[(</span><span class="n">length</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="o">-</span><span class="mi">1</span><span class="p">];</span>
+    <span class="n">string</span><span class="p">[(</span><span class="n">length</span> <span class="o">-</span> <span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="o">-</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So creating a function that does the opposite looks like this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">unwash</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">length</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">string</span><span class="p">)</span>
+
+    <span class="c1"># palindromic swap (patent pending)
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">&gt;&gt;</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">temp</span> <span class="o">=</span> <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+        <span class="n">string</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">string</span><span class="p">[</span><span class="n">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span>
+        <span class="n">string</span><span class="p">[</span><span class="n">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">temp</span>
+
+    <span class="c1"># unXOR them
+</span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">length</span> <span class="o">-</span> <span class="mi">1</span><span class="p">):</span>
+        <span class="n">string</span><span class="p">[</span><span class="n">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">1</span><span class="p">]</span> <span class="o">^=</span> <span class="n">string</span><span class="p">[</span><span class="n">length</span> <span class="o">-</span> <span class="n">i</span> <span class="o">-</span> <span class="mi">2</span><span class="p">]</span>
+
+    <span class="k">return</span> <span class="n">string</span>
+</code></pre></div></div>
+
+<p>Now that that is out of the way it is time to look at what kind of weird byte procedures the program does. So for each character, the program will create a string of 146 bytes that are used to perform assembly instructions (but I didn’t know that at the time). It looks something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>arr = [0xaa, 0xbb, 0xcc, 0xdd, 0xee]
+
+\x00\x01\x&lt;input[idx]&gt; | \x00\x00\x&lt;arr[x % 5]&gt;\x08\x01\x03\x03\x01\x01\x01\x00\x02\x01\x03 | \x04\x01\x&lt;idx&gt;
+</code></pre></div></div>
+
+<p>This string set will be created in a nested for loop where the bytes in between the <code class="language-plaintext highlighter-rouge">|</code> are repeated 10 times through the count variable <code class="language-plaintext highlighter-rouge">x</code> and <code class="language-plaintext highlighter-rouge">idx</code> is the count variable from the outside.</p>
+
+<p>Now when I first started looking at the <code class="language-plaintext highlighter-rouge">runnnn()</code> function it all looked so confusing so I decided to take a gamble and tried to dynamically debug it through GDB to see if each value was mapped to another, for some reason it showed me it wasn’t (when it technically was, I have no clue what went wrong but it’s whatever).</p>
+
+<p>Anyways I then had my <a href="https://github.com/Dylan-Jessee">friend</a> come and join me and after a little bit he came to the realization that the bytes per character were assembly instructions and the <code class="language-plaintext highlighter-rouge">runnnn()</code> function was kind of like an interpreter. So with that in mind we mapped everything out on a whiteboard and figured out that what it was doing was something similar to this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># runnnn function from binary
+</span><span class="k">def</span> <span class="nf">run</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">bob</span> <span class="o">=</span> <span class="p">[</span><span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0xbb</span><span class="p">,</span> <span class="mh">0xcc</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mh">0xee</span><span class="p">]</span>
+    <span class="n">memory</span> <span class="o">=</span> <span class="sa">b</span><span class="s">""</span>
+
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="n">reg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">char</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">reg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">bob</span><span class="p">[</span><span class="n">i</span> <span class="o">%</span> <span class="mi">5</span><span class="p">]</span>
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span>
+
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sbox</span><span class="p">[</span><span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+            <span class="c1">#print(chr(reg[1]).encode("utf-8"))
+</span>
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^=</span> <span class="n">reg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span>
+
+        <span class="n">memory</span> <span class="o">+=</span> <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="s">"little"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">memory</span>
+</code></pre></div></div>
+
+<p>Now with that being figured out, we then reversed that function and ended up with this:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">def</span> <span class="nf">unrun</span><span class="p">(</span><span class="n">string</span><span class="p">):</span>
+    <span class="n">bob</span> <span class="o">=</span> <span class="p">[</span><span class="mh">0xaa</span><span class="p">,</span> <span class="mh">0xbb</span><span class="p">,</span> <span class="mh">0xcc</span><span class="p">,</span> <span class="mh">0xdd</span><span class="p">,</span> <span class="mh">0xee</span><span class="p">]</span>
+    <span class="n">memory</span> <span class="o">=</span> <span class="sa">b</span><span class="s">""</span>
+
+    <span class="k">for</span> <span class="n">char</span> <span class="ow">in</span> <span class="n">string</span><span class="p">:</span>
+        <span class="n">reg</span> <span class="o">=</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="n">char</span><span class="p">]</span>
+
+        <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">10</span><span class="p">):</span>
+            <span class="n">reg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">bob</span><span class="p">[</span><span class="mi">4</span> <span class="o">-</span> <span class="p">(</span><span class="n">i</span> <span class="o">%</span> <span class="mi">5</span><span class="p">)]</span>
+
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span>
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">^=</span> <span class="n">reg</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sbox</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">])</span>
+            <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="p">((</span><span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="mi">3</span><span class="p">)</span> <span class="o">|</span> <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">&gt;&gt;</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&amp;</span> <span class="mh">0xff</span>
+
+        <span class="n">memory</span> <span class="o">+=</span> <span class="n">reg</span><span class="p">[</span><span class="mi">1</span><span class="p">].</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"little"</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">memory</span>
+</code></pre></div></div>
+
+<p>And now with all of the functions used reversed, we can now decode the message.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">table</span> <span class="o">=</span> <span class="s">""</span>
+<span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s">"./hieroglyphs.txt"</span><span class="p">,</span> <span class="s">"r"</span><span class="p">)</span> <span class="k">as</span> <span class="nb">file</span><span class="p">:</span>
+    <span class="n">table</span> <span class="o">+=</span> <span class="nb">file</span><span class="p">.</span><span class="n">read</span><span class="p">()</span>
+
+<span class="n">table</span> <span class="o">=</span> <span class="n">table</span><span class="p">.</span><span class="n">split</span><span class="p">(</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+
+<span class="n">message</span> <span class="o">=</span> <span class="s">"𓁡𓆓𓅥𓀺𓃛𓆉𓃣𓁊𓀴𓅜𓀒𓃗𓆂𓄆𓃾𓀠𓅊𓃚𓃧𓄂𓁷𓁻𓅒𓅠𓁡𓀆𓁠𓁿𓅊𓆏𓆃𓁄𓆑𓅅𓆍𓅌𓄄𓆅𓁷𓅡𓆞𓆊𓁺𓁇𓁱𓆝𓁮𓆜𓀚𓅷𓀰𓆝𓅁𓆅𓃣𓁆𓀤𓃔𓅅𓀯𓁏𓃚𓄉𓆄𓀼𓀏𓃻𓁧𓅩𓅳𓀯𓀇𓀛𓀙"</span>
+
+<span class="n">mapped</span> <span class="o">=</span> <span class="sa">b</span><span class="s">""</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="n">message</span><span class="p">:</span>
+    <span class="n">mapped</span> <span class="o">+=</span> <span class="n">table</span><span class="p">.</span><span class="n">index</span><span class="p">(</span><span class="n">i</span><span class="p">).</span><span class="n">to_bytes</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">"little"</span><span class="p">)</span>
+
+<span class="n">mapped</span> <span class="o">=</span> <span class="n">unwash</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">mapped</span><span class="p">))</span>
+<span class="n">mapped</span> <span class="o">=</span> <span class="n">unrun</span><span class="p">(</span><span class="n">mapped</span><span class="p">)</span>
+<span class="n">mapped</span> <span class="o">=</span> <span class="n">unwash</span><span class="p">(</span><span class="nb">bytearray</span><span class="p">(</span><span class="n">mapped</span><span class="p">))</span>
+<span class="k">print</span><span class="p">(</span><span class="n">mapped</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>And when we run it</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>╭─papichulo@luis-20an0069us in ~/Desktop/ExploitDev/LiveCTF/CSAW24/archeology-rev 
+╰$ python3 solve.py
+bytearray(b'csawctf{w41t_1_54w_7h353_5ymb0l5_47_7h3_m3t_71m3_70_r34d_b00k_0f_7h3_d34d}')
+</code></pre></div></div>
+
+<p>Overall I really enjoyed this challenge and learned to look out for these assembly instructions in the future.</p>
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

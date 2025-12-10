@@ -1,0 +1,8 @@
+>>> alice = [735, 674, 716, 764, 655, 699, 648, 763, 676, 663, 763, 656, 755, 706, 658, 717, 675, 658, 717, 672, 656, 756, 711, 693, 645, 711, 700, 753, 679]
+>>> for bob in range(len(alice) - 1):
+...     print(chr(alice[bob] ^ alice[bob+1]), end="")
+... 
+}n0s43s_3lkc1P_n1_m0d3r0B{MV>>> "}n0s43s_3lkc1P_n1_m0d3r0B{MV"[::-1]
+'VM{B0r3d0m_1n_P1ckl3_s34s0n}'
+
+BRUHHHH

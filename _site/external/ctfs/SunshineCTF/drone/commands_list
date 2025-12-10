@@ -1,0 +1,16 @@
+MOVE == <F/B>, <DISTANCE 1-1000> (segfaults if no params)
+BRKS == <E/D>
+SCAN == <R, S, D>
+RECD == <1-300> --- <string>
+LIGH == <1-5> --- <string>
+ARMX == <POS 1-10> (does not check below 1)
+SIGN == <string> (uppercase not permitted on attempt 1)
+TRNS == <1-100>
+CAMO == <N, I, T> (unsuported????) (safe mode off, you can get segfault)
+STOP == <no-params> --- <string>
+SAFE == <Y/N>
+SAMP
+SENS
+DEPL == <^[A-D]$>
+TURN
+CLAW == <O(open)/C(close)>

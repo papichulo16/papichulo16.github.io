@@ -1,0 +1,162 @@
+Gadgets information
+============================================================
+0x00000864 : addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000708 : addiu $a2, $a0, 4 ; sw $gp, 0x18($sp) ; lw $a1, ($a0) ; lw $t9, -0x7fb4($gp) ; lw $a3, -0x7fe4($gp) ; lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x000006e0 : addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x00000848 : addiu $sp, $sp, -0x20 ; sw $gp, 0x10($sp) ; sw $ra, 0x1c($sp) ; ldc2 $0, 7($v0) ; lw $a1, -0x7fd8($gp) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000c5c : addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c5c : addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c4c : addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c4c : addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c3c : addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c3c : addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c2c : addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000c2c : addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c9c : addiu $t8, $zero, 0xb ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c8c : addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c8c : addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c7c : addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c7c : addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c6c : addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c6c : addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x000007fc : addiu $t9, $t9, 0x740 ; sdc2 $25, ($zero) ; lw $gp, 0x10($sp) ; lw $v0, -0x7f90($gp) ; ldc2 $0, 4($v0) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x000006d4 : addu $a1, $a1, $gp ; lw $t9, 4($ra) ; addu $t9, $t9, $gp ; addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x000006dc : addu $t9, $t9, $gp ; addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x000006e4 : and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x00000ce8 : j 0x9b4c16c ; nop
+0x0000029c : j 4 ; nop
+0x00000818 : jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x000006e8 : jalr $t9 ; addiu $sp, $sp, -0x10
+0x00000c58 : jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c58 : jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c58 : jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c48 : jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c48 : jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c48 : jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c38 : jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000c38 : jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c38 : jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c28 : jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000c28 : jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000c28 : jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000ca8 : jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c98 : jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c98 : jalr $t9 ; addiu $t8, $zero, 0xb ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c88 : jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c88 : jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c88 : jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c78 : jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c78 : jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c78 : jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c68 : jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c68 : jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c68 : jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x000007ec : jalr $t9 ; lw $a0, ($v0)
+0x00000724 : jalr $t9 ; sw $v0, 0x10($sp)
+0x000002f8 : jr $zero ; jr $zero ; srav $zero, $zero, $zero ; multu $zero, $zero ; mfhi $zero ; syscall
+0x000002fc : jr $zero ; srav $zero, $zero, $zero ; multu $zero, $zero ; mfhi $zero ; syscall
+0x000007d4 : lbu $v0, 0xa0($s0) ; sdc2 $0, 0x13($v0) ; lw $v0, -0x7f88($gp) ; ldc2 $0, 5($v0) ; lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x0000080c : ldc2 $0, 4($v0) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x000007e0 : ldc2 $0, 5($v0) ; lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x00000854 : ldc2 $0, 7($v0) ; lw $a1, -0x7fd8($gp) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000810 : lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x0000085c : lw $a0, -0x7fd0($gp) ; lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x0000071c : lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x00000710 : lw $a1, ($a0) ; lw $t9, -0x7fb4($gp) ; lw $a3, -0x7fe4($gp) ; lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x00000858 : lw $a1, -0x7fd8($gp) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x000006d0 : lw $a1, 8($ra) ; addu $a1, $a1, $gp ; lw $t9, 4($ra) ; addu $t9, $t9, $gp ; addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x00000718 : lw $a3, -0x7fe4($gp) ; lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x000006c4 : lw $gp, ($ra) ; subu $gp, $ra, $gp ; move $a0, $sp ; lw $a1, 8($ra) ; addu $a1, $a1, $gp ; lw $t9, 4($ra) ; addu $t9, $t9, $gp ; addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x00000c04 : lw $gp, 0x10($fp) ; move $a0, $zero ; lw $v0, -0x7fac($gp) ; move $t9, $v0 ; sdc2 $25, ($zero) ; nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x000007f4 : lw $gp, 0x10($sp) ; lw $t9, -0x7fd0($gp) ; addiu $t9, $t9, 0x740 ; sdc2 $25, ($zero) ; lw $gp, 0x10($sp) ; lw $v0, -0x7f90($gp) ; ldc2 $0, 4($v0) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000804 : lw $gp, 0x10($sp) ; lw $v0, -0x7f90($gp) ; ldc2 $0, 4($v0) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x000007c8 : lw $s0, -0x7fd8($gp) ; sw $gp, 0x10($sp) ; sw $ra, 0x1c($sp) ; lbu $v0, 0xa0($s0) ; sdc2 $0, 0x13($v0) ; lw $v0, -0x7f88($gp) ; ldc2 $0, 5($v0) ; lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x000007e8 : lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x00000814 : lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000714 : lw $t9, -0x7fb4($gp) ; lw $a3, -0x7fe4($gp) ; lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x00000860 : lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x000007f8 : lw $t9, -0x7fd0($gp) ; addiu $t9, $t9, 0x740 ; sdc2 $25, ($zero) ; lw $gp, 0x10($sp) ; lw $v0, -0x7f90($gp) ; ldc2 $0, 4($v0) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000c50 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c50 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c40 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c40 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c30 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000c30 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c20 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000c20 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000ca0 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c90 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c90 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c80 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c80 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c70 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c70 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c60 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c60 : lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x000006d8 : lw $t9, 4($ra) ; addu $t9, $t9, $gp ; addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x000007dc : lw $v0, -0x7f88($gp) ; ldc2 $0, 5($v0) ; lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x00000808 : lw $v0, -0x7f90($gp) ; ldc2 $0, 4($v0) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000c0c : lw $v0, -0x7fac($gp) ; move $t9, $v0 ; sdc2 $25, ($zero) ; nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000844 : lw $v0, -0x7fb8($gp) ; addiu $sp, $sp, -0x20 ; sw $gp, 0x10($sp) ; sw $ra, 0x1c($sp) ; ldc2 $0, 7($v0) ; lw $a1, -0x7fd8($gp) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x000007e4 : lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x00000700 : lw $v0, -0x7fe8($gp) ; sw $ra, 0x24($sp) ; addiu $a2, $a0, 4 ; sw $gp, 0x18($sp) ; lw $a1, ($a0) ; lw $t9, -0x7fb4($gp) ; lw $a3, -0x7fe4($gp) ; lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x00000308 : mfhi $zero ; syscall
+0x000006cc : move $a0, $sp ; lw $a1, 8($ra) ; addu $a1, $a1, $gp ; lw $t9, 4($ra) ; addu $t9, $t9, $gp ; addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x00000c08 : move $a0, $zero ; lw $v0, -0x7fac($gp) ; move $t9, $v0 ; sdc2 $25, ($zero) ; nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000c54 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c54 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c54 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c44 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c44 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c44 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c34 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000c34 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000c34 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x14
+0x00000c24 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000c24 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000c24 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17 ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x16
+0x00000ca4 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c94 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c94 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c84 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c84 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c84 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xa
+0x00000c74 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c74 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c74 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xb
+0x00000c64 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf
+0x00000c64 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe
+0x00000c64 : move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xf ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xe ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0xc
+0x00000c10 : move $t9, $v0 ; sdc2 $25, ($zero) ; nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x000002e8 : movn $zero, $zero, $zero ; sra $zero, $zero, 0 ; mult $zero, $zero ; movz $zero, $zero, $zero ; jr $zero ; jr $zero ; srav $zero, $zero, $zero ; multu $zero, $zero ; mfhi $zero ; syscall
+0x000002f4 : movz $zero, $zero, $zero ; jr $zero ; jr $zero ; srav $zero, $zero, $zero ; multu $zero, $zero ; mfhi $zero ; syscall
+0x000002f0 : mult $zero, $zero ; movz $zero, $zero, $zero ; jr $zero ; jr $zero ; srav $zero, $zero, $zero ; multu $zero, $zero ; mfhi $zero ; syscall
+0x00000304 : multu $zero, $zero ; mfhi $zero ; syscall
+0x00000c1c : nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000c1c : nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x00000c18 : nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000c18 : nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x000007d8 : sdc2 $0, 0x13($v0) ; lw $v0, -0x7f88($gp) ; ldc2 $0, 5($v0) ; lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x00000800 : sdc2 $25, ($zero) ; lw $gp, 0x10($sp) ; lw $v0, -0x7f90($gp) ; ldc2 $0, 4($v0) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7f90($gp) ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000c14 : sdc2 $25, ($zero) ; nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a
+0x00000c14 : sdc2 $25, ($zero) ; nop ; nop ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x1a ; lw $t9, -0x7ff0($gp) ; move $t7, $ra ; jalr $t9 ; addiu $t8, $zero, 0x17
+0x000002ec : sra $zero, $zero, 0 ; mult $zero, $zero ; movz $zero, $zero, $zero ; jr $zero ; jr $zero ; srav $zero, $zero, $zero ; multu $zero, $zero ; mfhi $zero ; syscall
+0x00000300 : srav $zero, $zero, $zero ; multu $zero, $zero ; mfhi $zero ; syscall
+0x000006c8 : subu $gp, $ra, $gp ; move $a0, $sp ; lw $a1, 8($ra) ; addu $a1, $a1, $gp ; lw $t9, 4($ra) ; addu $t9, $t9, $gp ; addiu $at, $zero, -8 ; and $sp, $sp, $at ; jalr $t9 ; addiu $sp, $sp, -0x10
+0x000007cc : sw $gp, 0x10($sp) ; sw $ra, 0x1c($sp) ; lbu $v0, 0xa0($s0) ; sdc2 $0, 0x13($v0) ; lw $v0, -0x7f88($gp) ; ldc2 $0, 5($v0) ; lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x0000084c : sw $gp, 0x10($sp) ; sw $ra, 0x1c($sp) ; ldc2 $0, 7($v0) ; lw $a1, -0x7fd8($gp) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x0000070c : sw $gp, 0x18($sp) ; lw $a1, ($a0) ; lw $t9, -0x7fb4($gp) ; lw $a3, -0x7fe4($gp) ; lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x000007d0 : sw $ra, 0x1c($sp) ; lbu $v0, 0xa0($s0) ; sdc2 $0, 0x13($v0) ; lw $v0, -0x7f88($gp) ; ldc2 $0, 5($v0) ; lw $v0, -0x7fd4($gp) ; lw $t9, -0x7f88($gp) ; jalr $t9 ; lw $a0, ($v0)
+0x00000850 : sw $ra, 0x1c($sp) ; ldc2 $0, 7($v0) ; lw $a1, -0x7fd8($gp) ; lw $a0, -0x7fd0($gp) ; lw $t9, -0x7fb8($gp) ; addiu $a1, $a1, 0xa4 ; jalr $t9 ; addiu $a0, $a0, 0x11c0
+0x00000704 : sw $ra, 0x24($sp) ; addiu $a2, $a0, 4 ; sw $gp, 0x18($sp) ; lw $a1, ($a0) ; lw $t9, -0x7fb4($gp) ; lw $a3, -0x7fe4($gp) ; lw $a0, -0x7fe0($gp) ; sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x00000720 : sw $zero, 0x14($sp) ; jalr $t9 ; sw $v0, 0x10($sp)
+0x00000144 : syscall
+0x00000144 : syscall ; syscall
+0x00000140 : teq $zero, $at, 0x3ff ; syscall
+0x00000140 : teq $zero, $at, 0x3ff ; syscall ; syscall
+0x0000013c : teq $zero, $at, 0x3ff ; teq $zero, $at, 0x3ff ; syscall
+0x0000013c : teq $zero, $at, 0x3ff ; teq $zero, $at, 0x3ff ; syscall ; syscall
+0x00000138 : teq $zero, $zero, 0x3ff ; teq $zero, $at, 0x3ff ; teq $zero, $at, 0x3ff ; syscall
+0x00000138 : teq $zero, $zero, 0x3ff ; teq $zero, $at, 0x3ff ; teq $zero, $at, 0x3ff ; syscall ; syscall
+
+Unique gadgets found: 158

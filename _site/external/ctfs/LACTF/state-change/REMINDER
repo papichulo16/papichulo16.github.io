@@ -1,0 +1,1 @@
+REMEMBER: when re-calling fgets() you might want to use io.send() instead of io.sendline()

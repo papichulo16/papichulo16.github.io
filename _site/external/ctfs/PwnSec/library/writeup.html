@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title> | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title"></h1>
+  </header>
+
+  <div class="post-content">
+    <p>This challenge was really cool. I don’t know if this was the intended solution since my solution required libc and we weren’t given one, but I think my solution was cool.</p>
+
+<p>So the challenge gives you 4 options: <code class="language-plaintext highlighter-rouge">create</code>, <code class="language-plaintext highlighter-rouge">edit</code>, <code class="language-plaintext highlighter-rouge">print</code>, and <code class="language-plaintext highlighter-rouge">remove</code>. Now what is interesting here is the functionality of the <code class="language-plaintext highlighter-rouge">create</code> and <code class="language-plaintext highlighter-rouge">edit</code> functions.</p>
+
+<p>The <code class="language-plaintext highlighter-rouge">create</code> function will create two chunks, something I’d like to call a <code class="language-plaintext highlighter-rouge">mediary chunk</code> and the chunk that holds your data (title). What the program will do is store the pointer to the real chunk, the rating on the chunk/book/movie, and a pointer to either the <code class="language-plaintext highlighter-rouge">print_movie()</code> or <code class="language-plaintext highlighter-rouge">print_book()</code> function inside the <code class="language-plaintext highlighter-rouge">mediary chunk</code>. Then, it would write the address of the <code class="language-plaintext highlighter-rouge">mediary chunk</code> to the hash table and when using it, it would just double dereference it. A model would somehow look like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mediary chunk:
+          --------------
+          | size field |
+------------------------
+|chnk ptr | rating     |
+------------------------
+|func ptr | 
+----------- 
+
+pointers: 
+Hash table =&gt; mediary chunk =&gt; chunk with data
+</code></pre></div></div>
+
+<p>Now if you think that this was interesting behavior, wait until you see the behavior for the <code class="language-plaintext highlighter-rouge">edit</code> function. This function will first free the double dereference of the chunk you are editing (the one with the data), then allocate the <code class="language-plaintext highlighter-rouge">mediary chunk</code> for this new value (which will use the recently freed chunk), and then it will allocate the chunk with the new data. So technically it will use the previous chunk A and use that as a mediary for the new chunk B. The only problem is that it will not remove chunk A’s mediary pointer from the hash table and would just create a now entry in the hash table. It will look something like this:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Hash table =&gt; mediary chunk =&gt; chunk A
+Hash table =&gt; chunk A =&gt; chunk B
+</code></pre></div></div>
+
+<p>With this, I was able to call the <code class="language-plaintext highlighter-rouge">print()</code> function and get a <code class="language-plaintext highlighter-rouge">heap leak</code> since the program would treat chunk A (which stores a pointer to chunk B) as a chunk that is in use.</p>
+
+<p>Also with this in mind, I was able to do this misalignment with chunks A and B, then free chunk A, and when I create a new chunk, I would be able to overwrite the pointer to chunk B to be wherever in the heap I wanted. So what I did was create a new chunk, chunk C, and then I would overwrite the pointer in chunk A to point to chunk C’s mediary chunk + 0x10 bytes so when I would call <code class="language-plaintext highlighter-rouge">print()</code>, I would get the address of <code class="language-plaintext highlighter-rouge">print_____()</code> and get a PIE leak.</p>
+
+<p>After doing that, I would repeat that same process but instead I would make the pointer point to the GOT table to get a libc leak, which for some reason would only work 33% of the time since the chunks would get printed in different orders sometimes, but all I needed it to do was to work once. Now all I needed to do was replace a mediary chunk’s <code class="language-plaintext highlighter-rouge">print______()</code> function with <code class="language-plaintext highlighter-rouge">system()</code> and make the chunk’s data be <code class="language-plaintext highlighter-rouge">/bin/sh\x00</code> so that it would give me a shell, and this was a challenge. The reason why is because the program would always add a newline character to the end and if I wasn’t careful, my data would be 0x19 bytes long and it would create a 0x30 sized chunk which would not let the exploit work.</p>
+
+<p>So what I did, with a clean slate and a new set of chunks, was make a chunk be a mediary chunk to another chunk’s mediary chunk. Then I would perform the same process that I did previously but this time I would make the program misalign the chunks by 16 bytes, and when it would do that I would be able to write the address of <code class="language-plaintext highlighter-rouge">system()</code> inside the chunk’s <code class="language-plaintext highlighter-rouge">print_____()</code> function pointer. Then I would make the data of that chunk be <code class="language-plaintext highlighter-rouge">/bin/sh\x00</code> and when I would call <code class="language-plaintext highlighter-rouge">print</code>, it would call <code class="language-plaintext highlighter-rouge">system("/bin/sh")</code>.</p>
+
+<p>Now as a last hurdle I had to pull the <code class="language-plaintext highlighter-rouge">libc.so.6</code> file out of the Docker container, which I found to be funny since there was no way that this was the intended way to do things (or maybe it was, I don’t know hahahahaha). For future reference, this is what my friend <a href="https://github.com/SolarDebris">Alex</a> told me to do:</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>build the docker container with docker build
+open it in one terminal with docker run -ti ... /bin/sh
+on another terminal, get the processes and the name so I can run docker cp name:file location
+</code></pre></div></div>
+
+<p>Anyways, this was a really fun challenge to map out on a white board and figure out the maneuvers that would let me do whatever I wanted to the program. Overall I had a blast solving this and I highly encourage checking out the solve script. Pretty cool.</p>
+
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

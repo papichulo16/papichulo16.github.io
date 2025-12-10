@@ -1,0 +1,4270 @@
+PROTO
+GLOBAL
+	from sys import modules
+	Pushed modules
+SHORT_BINUNICODE
+	Pushed 't'
+MEMOIZE
+	Memoized 0 -> 't'
+GLOBAL
+	Pushed type
+SHORT_BINUNICODE
+	Pushed ''
+EMPTY_TUPLE
+	Pushed ()
+EMPTY_DICT
+	Pushed {}
+TUPLE3
+	Popped {}
+	Popped ()
+	Popped ''
+	Pushed ('', (), {})
+REDUCE
+	_var0 = type('', (), {})
+	Popped ('', (), {})
+	Popped type
+	Pushed _var0
+MEMOIZE
+	Memoized 1 -> _var0
+SETITEM
+	_var1 = modules
+	_var1['t'] = _var0
+	Popped _var0
+	Popped 't'
+	Popped modules
+	Pushed _var1
+POP
+	Popped _var1
+NONE
+	Pushed None
+MEMOIZE
+	Memoized 2 -> None
+POP
+	Popped None
+GLOBAL
+	Pushed print
+MEMOIZE
+	Memoized 3 -> print
+PUT
+	Memo index 2 changed from None to print
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+SHORT_BINUNICODE
+	Pushed 'b'
+MEMOIZE
+	Memoized 4 -> 'b'
+BINGET
+	Pushed print
+SETITEM
+	Popped print
+	Popped 'b'
+	Popped {}
+	Pushed {'b': print}
+TUPLE2
+	Popped {'b': print}
+	Popped None
+	Pushed (None, {'b': print})
+BUILD
+	_var2 = _var0
+	_var2.__setstate__((None, {'b': print}))
+	Popped (None, {'b': print})
+	Popped _var0
+	Pushed _var2
+POP
+	Popped _var2
+POP
+	Popped print
+GLOBAL
+	from t import b.__self__
+	Pushed b.__self__
+PUT
+	Memo index 2 changed from print to b.__self__
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'b'
+BINGET
+	Pushed b.__self__
+SETITEM
+	Popped b.__self__
+	Popped 'b'
+	Popped {}
+	Pushed {'b': b.__self__}
+TUPLE2
+	Popped {'b': b.__self__}
+	Popped None
+	Pushed (None, {'b': b.__self__})
+BUILD
+	_var3 = _var0
+	_var3.__setstate__((None, {'b': b.__self__}))
+	Popped (None, {'b': b.__self__})
+	Popped _var0
+	Pushed _var3
+POP
+	Popped _var3
+POP
+	Popped b.__self__
+MARK
+	Pushed MARK
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT1
+	Pushed 0
+BININT
+	Pushed -42
+LIST
+	Popped -42
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped 0
+	Popped MARK
+	Pushed [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]
+PUT
+	Memo index 2 changed from b.__self__ to [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+SHORT_BINUNICODE
+	Pushed 'i'
+MEMOIZE
+	Memoized 5 -> 'i'
+BINGET
+	Pushed [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]
+SETITEM
+	Popped [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]
+	Popped 'i'
+	Popped {}
+	Pushed {'i': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]}
+TUPLE2
+	Popped {'i': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]}
+	Popped None
+	Pushed (None, {'i': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]})
+BUILD
+	_var4 = _var0
+	_var4.__setstate__((None, {'i': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]}))
+	Popped (None, {'i': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]})
+	Popped _var0
+	Pushed _var4
+POP
+	Popped _var4
+POP
+	Popped [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]
+GLOBAL
+	from t import i.extend
+	Pushed i.extend
+GLOBAL
+	from t import b.map
+	Pushed b.map
+GLOBAL
+	from t import b.ord
+	Pushed b.ord
+GLOBAL
+	from t import b.input
+	Pushed b.input
+SHORT_BINUNICODE
+	Pushed 'Flag? '
+TUPLE1
+	Popped 'Flag? '
+	Pushed ('Flag? ',)
+REDUCE
+	_var5 = b.input('Flag? ')
+	Popped ('Flag? ',)
+	Popped b.input
+	Pushed _var5
+TUPLE2
+	Popped _var5
+	Popped b.ord
+	Pushed (b.ord, _var5)
+REDUCE
+	_var6 = b.map(b.ord, _var5)
+	Popped (b.ord, _var5)
+	Popped b.map
+	Pushed _var6
+TUPLE1
+	Popped _var6
+	Pushed (_var6,)
+REDUCE
+	_var7 = i.extend(_var6)
+	Popped (_var6,)
+	Popped i.extend
+	Pushed _var7
+POP
+	Popped _var7
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 674
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 716
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 764
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 655
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 699
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 648
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 763
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 676
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 663
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 763
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 656
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 755
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 706
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 658
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 717
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 675
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 658
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 717
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 672
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 656
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 756
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 711
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 693
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 645
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 711
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 700
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 753
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 679
+EMPTY_DICT
+	Pushed {}
+BININT2
+	Pushed 746
+EMPTY_DICT
+	Pushed {}
+NONE
+	Pushed None
+SHORT_BINUNICODE
+	Pushed 'Correct!'
+SETITEM
+	Popped 'Correct!'
+	Popped None
+	Popped {}
+	Pushed {None: 'Correct!'}
+SETITEM
+	Popped {None: 'Correct!'}
+	Popped 746
+	Popped {}
+	Pushed {746: {None: 'Correct!'}}
+SETITEM
+	Popped {746: {None: 'Correct!'}}
+	Popped 679
+	Popped {}
+	Pushed {679: {746: {None: 'Correct!'}}}
+SETITEM
+	Popped {679: {746: {None: 'Correct!'}}}
+	Popped 753
+	Popped {}
+	Pushed {753: {679: {746: {None: 'Correct!'}}}}
+SETITEM
+	Popped {753: {679: {746: {None: 'Correct!'}}}}
+	Popped 700
+	Popped {}
+	Pushed {700: {753: {679: {746: {None: 'Correct!'}}}}}
+SETITEM
+	Popped {700: {753: {679: {746: {None: 'Correct!'}}}}}
+	Popped 711
+	Popped {}
+	Pushed {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}
+SETITEM
+	Popped {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}
+	Popped 645
+	Popped {}
+	Pushed {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}
+SETITEM
+	Popped {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}
+	Popped 693
+	Popped {}
+	Pushed {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}
+SETITEM
+	Popped {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}
+	Popped 711
+	Popped {}
+	Pushed {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}
+SETITEM
+	Popped {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}
+	Popped 756
+	Popped {}
+	Pushed {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}
+SETITEM
+	Popped {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}
+	Popped 656
+	Popped {}
+	Pushed {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}
+SETITEM
+	Popped {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}
+	Popped 672
+	Popped {}
+	Pushed {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}
+SETITEM
+	Popped {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}
+	Popped 717
+	Popped {}
+	Pushed {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}
+SETITEM
+	Popped {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}
+	Popped 658
+	Popped {}
+	Pushed {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}
+SETITEM
+	Popped {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}
+	Popped 675
+	Popped {}
+	Pushed {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}
+SETITEM
+	Popped {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}
+	Popped 717
+	Popped {}
+	Pushed {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}
+	Popped 658
+	Popped {}
+	Pushed {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}
+	Popped 706
+	Popped {}
+	Pushed {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}
+	Popped 755
+	Popped {}
+	Pushed {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}
+	Popped 656
+	Popped {}
+	Pushed {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}
+	Popped 763
+	Popped {}
+	Pushed {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}
+	Popped 663
+	Popped {}
+	Pushed {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}
+	Popped 676
+	Popped {}
+	Pushed {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 763
+	Popped {}
+	Pushed {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 648
+	Popped {}
+	Pushed {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 699
+	Popped {}
+	Pushed {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 655
+	Popped {}
+	Pushed {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 764
+	Popped {}
+	Pushed {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 716
+	Popped {}
+	Pushed {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 674
+	Popped {}
+	Pushed {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+PUT
+	Memo index 2 changed from [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42] to {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+SHORT_BINUNICODE
+	Pushed 'd'
+MEMOIZE
+	Memoized 6 -> 'd'
+BINGET
+	Pushed {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+SETITEM
+	Popped {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped 'd'
+	Popped {}
+	Pushed {'d': {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+TUPLE2
+	Popped {'d': {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+	Popped None
+	Pushed (None, {'d': {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}})
+BUILD
+	_var8 = _var0
+	_var8.__setstate__((None, {'d': {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}))
+	Popped (None, {'d': {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}})
+	Popped _var0
+	Pushed _var8
+POP
+	Popped _var8
+POP
+	Popped {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}
+BINGET
+	Pushed 't'
+SHORT_BINUNICODE
+	Pushed 'd.get'
+MEMOIZE
+	Memoized 7 -> 'd.get'
+SHORT_BINUNICODE
+	Pushed 'i.pop'
+MEMOIZE
+	Memoized 8 -> 'i.pop'
+SHORT_BINUNICODE
+	Pushed 'x.__xor__'
+MEMOIZE
+	Memoized 9 -> 'x.__xor__'
+POP
+	Popped 'x.__xor__'
+POP
+	Popped 'i.pop'
+POP
+	Popped 'd.get'
+POP
+	Popped 't'
+BININT2
+	Pushed 735
+PUT
+	Memo index 2 changed from {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}} to 735
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+SHORT_BINUNICODE
+	Pushed 'x'
+MEMOIZE
+	Memoized 10 -> 'x'
+BINGET
+	Pushed 735
+SETITEM
+	Popped 735
+	Popped 'x'
+	Popped {}
+	Pushed {'x': 735}
+TUPLE2
+	Popped {'x': 735}
+	Popped None
+	Pushed (None, {'x': 735})
+BUILD
+	_var9 = _var0
+	_var9.__setstate__((None, {'x': 735}))
+	Popped (None, {'x': 735})
+	Popped _var0
+	Pushed _var9
+POP
+	Popped _var9
+POP
+	Popped 735
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var10 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var10
+TUPLE1
+	Popped _var10
+	Pushed (_var10,)
+REDUCE
+	_var11 = x.__xor__(_var10)
+	Popped (_var10,)
+	Popped x.__xor__
+	Pushed _var11
+PUT
+	Memo index 2 changed from 735 to _var11
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var11
+SETITEM
+	Popped _var11
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var11}
+TUPLE2
+	Popped {'x': _var11}
+	Popped None
+	Pushed (None, {'x': _var11})
+BUILD
+	_var12 = _var0
+	_var12.__setstate__((None, {'x': _var11}))
+	Popped (None, {'x': _var11})
+	Popped _var0
+	Pushed _var12
+POP
+	Popped _var12
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var11
+	Pushed (_var11, {})
+REDUCE
+	_var13 = d.get(_var11, {})
+	Popped (_var11, {})
+	Popped d.get
+	Pushed _var13
+PUT
+	Memo index 2 changed from _var11 to _var13
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var13
+SETITEM
+	Popped _var13
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var13}
+TUPLE2
+	Popped {'d': _var13}
+	Popped None
+	Pushed (None, {'d': _var13})
+BUILD
+	_var14 = _var0
+	_var14.__setstate__((None, {'d': _var13}))
+	Popped (None, {'d': _var13})
+	Popped _var0
+	Pushed _var14
+POP
+	Popped _var14
+POP
+	Popped _var13
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var15 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var15
+TUPLE1
+	Popped _var15
+	Pushed (_var15,)
+REDUCE
+	_var16 = x.__xor__(_var15)
+	Popped (_var15,)
+	Popped x.__xor__
+	Pushed _var16
+PUT
+	Memo index 2 changed from _var13 to _var16
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var16
+SETITEM
+	Popped _var16
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var16}
+TUPLE2
+	Popped {'x': _var16}
+	Popped None
+	Pushed (None, {'x': _var16})
+BUILD
+	_var17 = _var0
+	_var17.__setstate__((None, {'x': _var16}))
+	Popped (None, {'x': _var16})
+	Popped _var0
+	Pushed _var17
+POP
+	Popped _var17
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var16
+	Pushed (_var16, {})
+REDUCE
+	_var18 = d.get(_var16, {})
+	Popped (_var16, {})
+	Popped d.get
+	Pushed _var18
+PUT
+	Memo index 2 changed from _var16 to _var18
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var18
+SETITEM
+	Popped _var18
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var18}
+TUPLE2
+	Popped {'d': _var18}
+	Popped None
+	Pushed (None, {'d': _var18})
+BUILD
+	_var19 = _var0
+	_var19.__setstate__((None, {'d': _var18}))
+	Popped (None, {'d': _var18})
+	Popped _var0
+	Pushed _var19
+POP
+	Popped _var19
+POP
+	Popped _var18
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var20 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var20
+TUPLE1
+	Popped _var20
+	Pushed (_var20,)
+REDUCE
+	_var21 = x.__xor__(_var20)
+	Popped (_var20,)
+	Popped x.__xor__
+	Pushed _var21
+PUT
+	Memo index 2 changed from _var18 to _var21
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var21
+SETITEM
+	Popped _var21
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var21}
+TUPLE2
+	Popped {'x': _var21}
+	Popped None
+	Pushed (None, {'x': _var21})
+BUILD
+	_var22 = _var0
+	_var22.__setstate__((None, {'x': _var21}))
+	Popped (None, {'x': _var21})
+	Popped _var0
+	Pushed _var22
+POP
+	Popped _var22
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var21
+	Pushed (_var21, {})
+REDUCE
+	_var23 = d.get(_var21, {})
+	Popped (_var21, {})
+	Popped d.get
+	Pushed _var23
+PUT
+	Memo index 2 changed from _var21 to _var23
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var23
+SETITEM
+	Popped _var23
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var23}
+TUPLE2
+	Popped {'d': _var23}
+	Popped None
+	Pushed (None, {'d': _var23})
+BUILD
+	_var24 = _var0
+	_var24.__setstate__((None, {'d': _var23}))
+	Popped (None, {'d': _var23})
+	Popped _var0
+	Pushed _var24
+POP
+	Popped _var24
+POP
+	Popped _var23
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var25 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var25
+TUPLE1
+	Popped _var25
+	Pushed (_var25,)
+REDUCE
+	_var26 = x.__xor__(_var25)
+	Popped (_var25,)
+	Popped x.__xor__
+	Pushed _var26
+PUT
+	Memo index 2 changed from _var23 to _var26
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var26
+SETITEM
+	Popped _var26
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var26}
+TUPLE2
+	Popped {'x': _var26}
+	Popped None
+	Pushed (None, {'x': _var26})
+BUILD
+	_var27 = _var0
+	_var27.__setstate__((None, {'x': _var26}))
+	Popped (None, {'x': _var26})
+	Popped _var0
+	Pushed _var27
+POP
+	Popped _var27
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var26
+	Pushed (_var26, {})
+REDUCE
+	_var28 = d.get(_var26, {})
+	Popped (_var26, {})
+	Popped d.get
+	Pushed _var28
+PUT
+	Memo index 2 changed from _var26 to _var28
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var28
+SETITEM
+	Popped _var28
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var28}
+TUPLE2
+	Popped {'d': _var28}
+	Popped None
+	Pushed (None, {'d': _var28})
+BUILD
+	_var29 = _var0
+	_var29.__setstate__((None, {'d': _var28}))
+	Popped (None, {'d': _var28})
+	Popped _var0
+	Pushed _var29
+POP
+	Popped _var29
+POP
+	Popped _var28
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var30 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var30
+TUPLE1
+	Popped _var30
+	Pushed (_var30,)
+REDUCE
+	_var31 = x.__xor__(_var30)
+	Popped (_var30,)
+	Popped x.__xor__
+	Pushed _var31
+PUT
+	Memo index 2 changed from _var28 to _var31
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var31
+SETITEM
+	Popped _var31
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var31}
+TUPLE2
+	Popped {'x': _var31}
+	Popped None
+	Pushed (None, {'x': _var31})
+BUILD
+	_var32 = _var0
+	_var32.__setstate__((None, {'x': _var31}))
+	Popped (None, {'x': _var31})
+	Popped _var0
+	Pushed _var32
+POP
+	Popped _var32
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var31
+	Pushed (_var31, {})
+REDUCE
+	_var33 = d.get(_var31, {})
+	Popped (_var31, {})
+	Popped d.get
+	Pushed _var33
+PUT
+	Memo index 2 changed from _var31 to _var33
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var33
+SETITEM
+	Popped _var33
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var33}
+TUPLE2
+	Popped {'d': _var33}
+	Popped None
+	Pushed (None, {'d': _var33})
+BUILD
+	_var34 = _var0
+	_var34.__setstate__((None, {'d': _var33}))
+	Popped (None, {'d': _var33})
+	Popped _var0
+	Pushed _var34
+POP
+	Popped _var34
+POP
+	Popped _var33
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var35 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var35
+TUPLE1
+	Popped _var35
+	Pushed (_var35,)
+REDUCE
+	_var36 = x.__xor__(_var35)
+	Popped (_var35,)
+	Popped x.__xor__
+	Pushed _var36
+PUT
+	Memo index 2 changed from _var33 to _var36
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var36
+SETITEM
+	Popped _var36
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var36}
+TUPLE2
+	Popped {'x': _var36}
+	Popped None
+	Pushed (None, {'x': _var36})
+BUILD
+	_var37 = _var0
+	_var37.__setstate__((None, {'x': _var36}))
+	Popped (None, {'x': _var36})
+	Popped _var0
+	Pushed _var37
+POP
+	Popped _var37
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var36
+	Pushed (_var36, {})
+REDUCE
+	_var38 = d.get(_var36, {})
+	Popped (_var36, {})
+	Popped d.get
+	Pushed _var38
+PUT
+	Memo index 2 changed from _var36 to _var38
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var38
+SETITEM
+	Popped _var38
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var38}
+TUPLE2
+	Popped {'d': _var38}
+	Popped None
+	Pushed (None, {'d': _var38})
+BUILD
+	_var39 = _var0
+	_var39.__setstate__((None, {'d': _var38}))
+	Popped (None, {'d': _var38})
+	Popped _var0
+	Pushed _var39
+POP
+	Popped _var39
+POP
+	Popped _var38
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var40 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var40
+TUPLE1
+	Popped _var40
+	Pushed (_var40,)
+REDUCE
+	_var41 = x.__xor__(_var40)
+	Popped (_var40,)
+	Popped x.__xor__
+	Pushed _var41
+PUT
+	Memo index 2 changed from _var38 to _var41
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var41
+SETITEM
+	Popped _var41
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var41}
+TUPLE2
+	Popped {'x': _var41}
+	Popped None
+	Pushed (None, {'x': _var41})
+BUILD
+	_var42 = _var0
+	_var42.__setstate__((None, {'x': _var41}))
+	Popped (None, {'x': _var41})
+	Popped _var0
+	Pushed _var42
+POP
+	Popped _var42
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var41
+	Pushed (_var41, {})
+REDUCE
+	_var43 = d.get(_var41, {})
+	Popped (_var41, {})
+	Popped d.get
+	Pushed _var43
+PUT
+	Memo index 2 changed from _var41 to _var43
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var43
+SETITEM
+	Popped _var43
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var43}
+TUPLE2
+	Popped {'d': _var43}
+	Popped None
+	Pushed (None, {'d': _var43})
+BUILD
+	_var44 = _var0
+	_var44.__setstate__((None, {'d': _var43}))
+	Popped (None, {'d': _var43})
+	Popped _var0
+	Pushed _var44
+POP
+	Popped _var44
+POP
+	Popped _var43
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var45 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var45
+TUPLE1
+	Popped _var45
+	Pushed (_var45,)
+REDUCE
+	_var46 = x.__xor__(_var45)
+	Popped (_var45,)
+	Popped x.__xor__
+	Pushed _var46
+PUT
+	Memo index 2 changed from _var43 to _var46
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var46
+SETITEM
+	Popped _var46
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var46}
+TUPLE2
+	Popped {'x': _var46}
+	Popped None
+	Pushed (None, {'x': _var46})
+BUILD
+	_var47 = _var0
+	_var47.__setstate__((None, {'x': _var46}))
+	Popped (None, {'x': _var46})
+	Popped _var0
+	Pushed _var47
+POP
+	Popped _var47
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var46
+	Pushed (_var46, {})
+REDUCE
+	_var48 = d.get(_var46, {})
+	Popped (_var46, {})
+	Popped d.get
+	Pushed _var48
+PUT
+	Memo index 2 changed from _var46 to _var48
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var48
+SETITEM
+	Popped _var48
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var48}
+TUPLE2
+	Popped {'d': _var48}
+	Popped None
+	Pushed (None, {'d': _var48})
+BUILD
+	_var49 = _var0
+	_var49.__setstate__((None, {'d': _var48}))
+	Popped (None, {'d': _var48})
+	Popped _var0
+	Pushed _var49
+POP
+	Popped _var49
+POP
+	Popped _var48
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var50 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var50
+TUPLE1
+	Popped _var50
+	Pushed (_var50,)
+REDUCE
+	_var51 = x.__xor__(_var50)
+	Popped (_var50,)
+	Popped x.__xor__
+	Pushed _var51
+PUT
+	Memo index 2 changed from _var48 to _var51
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var51
+SETITEM
+	Popped _var51
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var51}
+TUPLE2
+	Popped {'x': _var51}
+	Popped None
+	Pushed (None, {'x': _var51})
+BUILD
+	_var52 = _var0
+	_var52.__setstate__((None, {'x': _var51}))
+	Popped (None, {'x': _var51})
+	Popped _var0
+	Pushed _var52
+POP
+	Popped _var52
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var51
+	Pushed (_var51, {})
+REDUCE
+	_var53 = d.get(_var51, {})
+	Popped (_var51, {})
+	Popped d.get
+	Pushed _var53
+PUT
+	Memo index 2 changed from _var51 to _var53
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var53
+SETITEM
+	Popped _var53
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var53}
+TUPLE2
+	Popped {'d': _var53}
+	Popped None
+	Pushed (None, {'d': _var53})
+BUILD
+	_var54 = _var0
+	_var54.__setstate__((None, {'d': _var53}))
+	Popped (None, {'d': _var53})
+	Popped _var0
+	Pushed _var54
+POP
+	Popped _var54
+POP
+	Popped _var53
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var55 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var55
+TUPLE1
+	Popped _var55
+	Pushed (_var55,)
+REDUCE
+	_var56 = x.__xor__(_var55)
+	Popped (_var55,)
+	Popped x.__xor__
+	Pushed _var56
+PUT
+	Memo index 2 changed from _var53 to _var56
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var56
+SETITEM
+	Popped _var56
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var56}
+TUPLE2
+	Popped {'x': _var56}
+	Popped None
+	Pushed (None, {'x': _var56})
+BUILD
+	_var57 = _var0
+	_var57.__setstate__((None, {'x': _var56}))
+	Popped (None, {'x': _var56})
+	Popped _var0
+	Pushed _var57
+POP
+	Popped _var57
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var56
+	Pushed (_var56, {})
+REDUCE
+	_var58 = d.get(_var56, {})
+	Popped (_var56, {})
+	Popped d.get
+	Pushed _var58
+PUT
+	Memo index 2 changed from _var56 to _var58
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var58
+SETITEM
+	Popped _var58
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var58}
+TUPLE2
+	Popped {'d': _var58}
+	Popped None
+	Pushed (None, {'d': _var58})
+BUILD
+	_var59 = _var0
+	_var59.__setstate__((None, {'d': _var58}))
+	Popped (None, {'d': _var58})
+	Popped _var0
+	Pushed _var59
+POP
+	Popped _var59
+POP
+	Popped _var58
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var60 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var60
+TUPLE1
+	Popped _var60
+	Pushed (_var60,)
+REDUCE
+	_var61 = x.__xor__(_var60)
+	Popped (_var60,)
+	Popped x.__xor__
+	Pushed _var61
+PUT
+	Memo index 2 changed from _var58 to _var61
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var61
+SETITEM
+	Popped _var61
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var61}
+TUPLE2
+	Popped {'x': _var61}
+	Popped None
+	Pushed (None, {'x': _var61})
+BUILD
+	_var62 = _var0
+	_var62.__setstate__((None, {'x': _var61}))
+	Popped (None, {'x': _var61})
+	Popped _var0
+	Pushed _var62
+POP
+	Popped _var62
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var61
+	Pushed (_var61, {})
+REDUCE
+	_var63 = d.get(_var61, {})
+	Popped (_var61, {})
+	Popped d.get
+	Pushed _var63
+PUT
+	Memo index 2 changed from _var61 to _var63
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var63
+SETITEM
+	Popped _var63
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var63}
+TUPLE2
+	Popped {'d': _var63}
+	Popped None
+	Pushed (None, {'d': _var63})
+BUILD
+	_var64 = _var0
+	_var64.__setstate__((None, {'d': _var63}))
+	Popped (None, {'d': _var63})
+	Popped _var0
+	Pushed _var64
+POP
+	Popped _var64
+POP
+	Popped _var63
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var65 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var65
+TUPLE1
+	Popped _var65
+	Pushed (_var65,)
+REDUCE
+	_var66 = x.__xor__(_var65)
+	Popped (_var65,)
+	Popped x.__xor__
+	Pushed _var66
+PUT
+	Memo index 2 changed from _var63 to _var66
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var66
+SETITEM
+	Popped _var66
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var66}
+TUPLE2
+	Popped {'x': _var66}
+	Popped None
+	Pushed (None, {'x': _var66})
+BUILD
+	_var67 = _var0
+	_var67.__setstate__((None, {'x': _var66}))
+	Popped (None, {'x': _var66})
+	Popped _var0
+	Pushed _var67
+POP
+	Popped _var67
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var66
+	Pushed (_var66, {})
+REDUCE
+	_var68 = d.get(_var66, {})
+	Popped (_var66, {})
+	Popped d.get
+	Pushed _var68
+PUT
+	Memo index 2 changed from _var66 to _var68
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var68
+SETITEM
+	Popped _var68
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var68}
+TUPLE2
+	Popped {'d': _var68}
+	Popped None
+	Pushed (None, {'d': _var68})
+BUILD
+	_var69 = _var0
+	_var69.__setstate__((None, {'d': _var68}))
+	Popped (None, {'d': _var68})
+	Popped _var0
+	Pushed _var69
+POP
+	Popped _var69
+POP
+	Popped _var68
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var70 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var70
+TUPLE1
+	Popped _var70
+	Pushed (_var70,)
+REDUCE
+	_var71 = x.__xor__(_var70)
+	Popped (_var70,)
+	Popped x.__xor__
+	Pushed _var71
+PUT
+	Memo index 2 changed from _var68 to _var71
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var71
+SETITEM
+	Popped _var71
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var71}
+TUPLE2
+	Popped {'x': _var71}
+	Popped None
+	Pushed (None, {'x': _var71})
+BUILD
+	_var72 = _var0
+	_var72.__setstate__((None, {'x': _var71}))
+	Popped (None, {'x': _var71})
+	Popped _var0
+	Pushed _var72
+POP
+	Popped _var72
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var71
+	Pushed (_var71, {})
+REDUCE
+	_var73 = d.get(_var71, {})
+	Popped (_var71, {})
+	Popped d.get
+	Pushed _var73
+PUT
+	Memo index 2 changed from _var71 to _var73
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var73
+SETITEM
+	Popped _var73
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var73}
+TUPLE2
+	Popped {'d': _var73}
+	Popped None
+	Pushed (None, {'d': _var73})
+BUILD
+	_var74 = _var0
+	_var74.__setstate__((None, {'d': _var73}))
+	Popped (None, {'d': _var73})
+	Popped _var0
+	Pushed _var74
+POP
+	Popped _var74
+POP
+	Popped _var73
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var75 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var75
+TUPLE1
+	Popped _var75
+	Pushed (_var75,)
+REDUCE
+	_var76 = x.__xor__(_var75)
+	Popped (_var75,)
+	Popped x.__xor__
+	Pushed _var76
+PUT
+	Memo index 2 changed from _var73 to _var76
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var76
+SETITEM
+	Popped _var76
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var76}
+TUPLE2
+	Popped {'x': _var76}
+	Popped None
+	Pushed (None, {'x': _var76})
+BUILD
+	_var77 = _var0
+	_var77.__setstate__((None, {'x': _var76}))
+	Popped (None, {'x': _var76})
+	Popped _var0
+	Pushed _var77
+POP
+	Popped _var77
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var76
+	Pushed (_var76, {})
+REDUCE
+	_var78 = d.get(_var76, {})
+	Popped (_var76, {})
+	Popped d.get
+	Pushed _var78
+PUT
+	Memo index 2 changed from _var76 to _var78
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var78
+SETITEM
+	Popped _var78
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var78}
+TUPLE2
+	Popped {'d': _var78}
+	Popped None
+	Pushed (None, {'d': _var78})
+BUILD
+	_var79 = _var0
+	_var79.__setstate__((None, {'d': _var78}))
+	Popped (None, {'d': _var78})
+	Popped _var0
+	Pushed _var79
+POP
+	Popped _var79
+POP
+	Popped _var78
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var80 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var80
+TUPLE1
+	Popped _var80
+	Pushed (_var80,)
+REDUCE
+	_var81 = x.__xor__(_var80)
+	Popped (_var80,)
+	Popped x.__xor__
+	Pushed _var81
+PUT
+	Memo index 2 changed from _var78 to _var81
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var81
+SETITEM
+	Popped _var81
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var81}
+TUPLE2
+	Popped {'x': _var81}
+	Popped None
+	Pushed (None, {'x': _var81})
+BUILD
+	_var82 = _var0
+	_var82.__setstate__((None, {'x': _var81}))
+	Popped (None, {'x': _var81})
+	Popped _var0
+	Pushed _var82
+POP
+	Popped _var82
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var81
+	Pushed (_var81, {})
+REDUCE
+	_var83 = d.get(_var81, {})
+	Popped (_var81, {})
+	Popped d.get
+	Pushed _var83
+PUT
+	Memo index 2 changed from _var81 to _var83
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var83
+SETITEM
+	Popped _var83
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var83}
+TUPLE2
+	Popped {'d': _var83}
+	Popped None
+	Pushed (None, {'d': _var83})
+BUILD
+	_var84 = _var0
+	_var84.__setstate__((None, {'d': _var83}))
+	Popped (None, {'d': _var83})
+	Popped _var0
+	Pushed _var84
+POP
+	Popped _var84
+POP
+	Popped _var83
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var85 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var85
+TUPLE1
+	Popped _var85
+	Pushed (_var85,)
+REDUCE
+	_var86 = x.__xor__(_var85)
+	Popped (_var85,)
+	Popped x.__xor__
+	Pushed _var86
+PUT
+	Memo index 2 changed from _var83 to _var86
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var86
+SETITEM
+	Popped _var86
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var86}
+TUPLE2
+	Popped {'x': _var86}
+	Popped None
+	Pushed (None, {'x': _var86})
+BUILD
+	_var87 = _var0
+	_var87.__setstate__((None, {'x': _var86}))
+	Popped (None, {'x': _var86})
+	Popped _var0
+	Pushed _var87
+POP
+	Popped _var87
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var86
+	Pushed (_var86, {})
+REDUCE
+	_var88 = d.get(_var86, {})
+	Popped (_var86, {})
+	Popped d.get
+	Pushed _var88
+PUT
+	Memo index 2 changed from _var86 to _var88
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var88
+SETITEM
+	Popped _var88
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var88}
+TUPLE2
+	Popped {'d': _var88}
+	Popped None
+	Pushed (None, {'d': _var88})
+BUILD
+	_var89 = _var0
+	_var89.__setstate__((None, {'d': _var88}))
+	Popped (None, {'d': _var88})
+	Popped _var0
+	Pushed _var89
+POP
+	Popped _var89
+POP
+	Popped _var88
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var90 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var90
+TUPLE1
+	Popped _var90
+	Pushed (_var90,)
+REDUCE
+	_var91 = x.__xor__(_var90)
+	Popped (_var90,)
+	Popped x.__xor__
+	Pushed _var91
+PUT
+	Memo index 2 changed from _var88 to _var91
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var91
+SETITEM
+	Popped _var91
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var91}
+TUPLE2
+	Popped {'x': _var91}
+	Popped None
+	Pushed (None, {'x': _var91})
+BUILD
+	_var92 = _var0
+	_var92.__setstate__((None, {'x': _var91}))
+	Popped (None, {'x': _var91})
+	Popped _var0
+	Pushed _var92
+POP
+	Popped _var92
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var91
+	Pushed (_var91, {})
+REDUCE
+	_var93 = d.get(_var91, {})
+	Popped (_var91, {})
+	Popped d.get
+	Pushed _var93
+PUT
+	Memo index 2 changed from _var91 to _var93
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var93
+SETITEM
+	Popped _var93
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var93}
+TUPLE2
+	Popped {'d': _var93}
+	Popped None
+	Pushed (None, {'d': _var93})
+BUILD
+	_var94 = _var0
+	_var94.__setstate__((None, {'d': _var93}))
+	Popped (None, {'d': _var93})
+	Popped _var0
+	Pushed _var94
+POP
+	Popped _var94
+POP
+	Popped _var93
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var95 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var95
+TUPLE1
+	Popped _var95
+	Pushed (_var95,)
+REDUCE
+	_var96 = x.__xor__(_var95)
+	Popped (_var95,)
+	Popped x.__xor__
+	Pushed _var96
+PUT
+	Memo index 2 changed from _var93 to _var96
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var96
+SETITEM
+	Popped _var96
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var96}
+TUPLE2
+	Popped {'x': _var96}
+	Popped None
+	Pushed (None, {'x': _var96})
+BUILD
+	_var97 = _var0
+	_var97.__setstate__((None, {'x': _var96}))
+	Popped (None, {'x': _var96})
+	Popped _var0
+	Pushed _var97
+POP
+	Popped _var97
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var96
+	Pushed (_var96, {})
+REDUCE
+	_var98 = d.get(_var96, {})
+	Popped (_var96, {})
+	Popped d.get
+	Pushed _var98
+PUT
+	Memo index 2 changed from _var96 to _var98
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var98
+SETITEM
+	Popped _var98
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var98}
+TUPLE2
+	Popped {'d': _var98}
+	Popped None
+	Pushed (None, {'d': _var98})
+BUILD
+	_var99 = _var0
+	_var99.__setstate__((None, {'d': _var98}))
+	Popped (None, {'d': _var98})
+	Popped _var0
+	Pushed _var99
+POP
+	Popped _var99
+POP
+	Popped _var98
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var100 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var100
+TUPLE1
+	Popped _var100
+	Pushed (_var100,)
+REDUCE
+	_var101 = x.__xor__(_var100)
+	Popped (_var100,)
+	Popped x.__xor__
+	Pushed _var101
+PUT
+	Memo index 2 changed from _var98 to _var101
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var101
+SETITEM
+	Popped _var101
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var101}
+TUPLE2
+	Popped {'x': _var101}
+	Popped None
+	Pushed (None, {'x': _var101})
+BUILD
+	_var102 = _var0
+	_var102.__setstate__((None, {'x': _var101}))
+	Popped (None, {'x': _var101})
+	Popped _var0
+	Pushed _var102
+POP
+	Popped _var102
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var101
+	Pushed (_var101, {})
+REDUCE
+	_var103 = d.get(_var101, {})
+	Popped (_var101, {})
+	Popped d.get
+	Pushed _var103
+PUT
+	Memo index 2 changed from _var101 to _var103
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var103
+SETITEM
+	Popped _var103
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var103}
+TUPLE2
+	Popped {'d': _var103}
+	Popped None
+	Pushed (None, {'d': _var103})
+BUILD
+	_var104 = _var0
+	_var104.__setstate__((None, {'d': _var103}))
+	Popped (None, {'d': _var103})
+	Popped _var0
+	Pushed _var104
+POP
+	Popped _var104
+POP
+	Popped _var103
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var105 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var105
+TUPLE1
+	Popped _var105
+	Pushed (_var105,)
+REDUCE
+	_var106 = x.__xor__(_var105)
+	Popped (_var105,)
+	Popped x.__xor__
+	Pushed _var106
+PUT
+	Memo index 2 changed from _var103 to _var106
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var106
+SETITEM
+	Popped _var106
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var106}
+TUPLE2
+	Popped {'x': _var106}
+	Popped None
+	Pushed (None, {'x': _var106})
+BUILD
+	_var107 = _var0
+	_var107.__setstate__((None, {'x': _var106}))
+	Popped (None, {'x': _var106})
+	Popped _var0
+	Pushed _var107
+POP
+	Popped _var107
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var106
+	Pushed (_var106, {})
+REDUCE
+	_var108 = d.get(_var106, {})
+	Popped (_var106, {})
+	Popped d.get
+	Pushed _var108
+PUT
+	Memo index 2 changed from _var106 to _var108
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var108
+SETITEM
+	Popped _var108
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var108}
+TUPLE2
+	Popped {'d': _var108}
+	Popped None
+	Pushed (None, {'d': _var108})
+BUILD
+	_var109 = _var0
+	_var109.__setstate__((None, {'d': _var108}))
+	Popped (None, {'d': _var108})
+	Popped _var0
+	Pushed _var109
+POP
+	Popped _var109
+POP
+	Popped _var108
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var110 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var110
+TUPLE1
+	Popped _var110
+	Pushed (_var110,)
+REDUCE
+	_var111 = x.__xor__(_var110)
+	Popped (_var110,)
+	Popped x.__xor__
+	Pushed _var111
+PUT
+	Memo index 2 changed from _var108 to _var111
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var111
+SETITEM
+	Popped _var111
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var111}
+TUPLE2
+	Popped {'x': _var111}
+	Popped None
+	Pushed (None, {'x': _var111})
+BUILD
+	_var112 = _var0
+	_var112.__setstate__((None, {'x': _var111}))
+	Popped (None, {'x': _var111})
+	Popped _var0
+	Pushed _var112
+POP
+	Popped _var112
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var111
+	Pushed (_var111, {})
+REDUCE
+	_var113 = d.get(_var111, {})
+	Popped (_var111, {})
+	Popped d.get
+	Pushed _var113
+PUT
+	Memo index 2 changed from _var111 to _var113
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var113
+SETITEM
+	Popped _var113
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var113}
+TUPLE2
+	Popped {'d': _var113}
+	Popped None
+	Pushed (None, {'d': _var113})
+BUILD
+	_var114 = _var0
+	_var114.__setstate__((None, {'d': _var113}))
+	Popped (None, {'d': _var113})
+	Popped _var0
+	Pushed _var114
+POP
+	Popped _var114
+POP
+	Popped _var113
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var115 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var115
+TUPLE1
+	Popped _var115
+	Pushed (_var115,)
+REDUCE
+	_var116 = x.__xor__(_var115)
+	Popped (_var115,)
+	Popped x.__xor__
+	Pushed _var116
+PUT
+	Memo index 2 changed from _var113 to _var116
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var116
+SETITEM
+	Popped _var116
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var116}
+TUPLE2
+	Popped {'x': _var116}
+	Popped None
+	Pushed (None, {'x': _var116})
+BUILD
+	_var117 = _var0
+	_var117.__setstate__((None, {'x': _var116}))
+	Popped (None, {'x': _var116})
+	Popped _var0
+	Pushed _var117
+POP
+	Popped _var117
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var116
+	Pushed (_var116, {})
+REDUCE
+	_var118 = d.get(_var116, {})
+	Popped (_var116, {})
+	Popped d.get
+	Pushed _var118
+PUT
+	Memo index 2 changed from _var116 to _var118
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var118
+SETITEM
+	Popped _var118
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var118}
+TUPLE2
+	Popped {'d': _var118}
+	Popped None
+	Pushed (None, {'d': _var118})
+BUILD
+	_var119 = _var0
+	_var119.__setstate__((None, {'d': _var118}))
+	Popped (None, {'d': _var118})
+	Popped _var0
+	Pushed _var119
+POP
+	Popped _var119
+POP
+	Popped _var118
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var120 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var120
+TUPLE1
+	Popped _var120
+	Pushed (_var120,)
+REDUCE
+	_var121 = x.__xor__(_var120)
+	Popped (_var120,)
+	Popped x.__xor__
+	Pushed _var121
+PUT
+	Memo index 2 changed from _var118 to _var121
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var121
+SETITEM
+	Popped _var121
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var121}
+TUPLE2
+	Popped {'x': _var121}
+	Popped None
+	Pushed (None, {'x': _var121})
+BUILD
+	_var122 = _var0
+	_var122.__setstate__((None, {'x': _var121}))
+	Popped (None, {'x': _var121})
+	Popped _var0
+	Pushed _var122
+POP
+	Popped _var122
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var121
+	Pushed (_var121, {})
+REDUCE
+	_var123 = d.get(_var121, {})
+	Popped (_var121, {})
+	Popped d.get
+	Pushed _var123
+PUT
+	Memo index 2 changed from _var121 to _var123
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var123
+SETITEM
+	Popped _var123
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var123}
+TUPLE2
+	Popped {'d': _var123}
+	Popped None
+	Pushed (None, {'d': _var123})
+BUILD
+	_var124 = _var0
+	_var124.__setstate__((None, {'d': _var123}))
+	Popped (None, {'d': _var123})
+	Popped _var0
+	Pushed _var124
+POP
+	Popped _var124
+POP
+	Popped _var123
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var125 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var125
+TUPLE1
+	Popped _var125
+	Pushed (_var125,)
+REDUCE
+	_var126 = x.__xor__(_var125)
+	Popped (_var125,)
+	Popped x.__xor__
+	Pushed _var126
+PUT
+	Memo index 2 changed from _var123 to _var126
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var126
+SETITEM
+	Popped _var126
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var126}
+TUPLE2
+	Popped {'x': _var126}
+	Popped None
+	Pushed (None, {'x': _var126})
+BUILD
+	_var127 = _var0
+	_var127.__setstate__((None, {'x': _var126}))
+	Popped (None, {'x': _var126})
+	Popped _var0
+	Pushed _var127
+POP
+	Popped _var127
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var126
+	Pushed (_var126, {})
+REDUCE
+	_var128 = d.get(_var126, {})
+	Popped (_var126, {})
+	Popped d.get
+	Pushed _var128
+PUT
+	Memo index 2 changed from _var126 to _var128
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var128
+SETITEM
+	Popped _var128
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var128}
+TUPLE2
+	Popped {'d': _var128}
+	Popped None
+	Pushed (None, {'d': _var128})
+BUILD
+	_var129 = _var0
+	_var129.__setstate__((None, {'d': _var128}))
+	Popped (None, {'d': _var128})
+	Popped _var0
+	Pushed _var129
+POP
+	Popped _var129
+POP
+	Popped _var128
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var130 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var130
+TUPLE1
+	Popped _var130
+	Pushed (_var130,)
+REDUCE
+	_var131 = x.__xor__(_var130)
+	Popped (_var130,)
+	Popped x.__xor__
+	Pushed _var131
+PUT
+	Memo index 2 changed from _var128 to _var131
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var131
+SETITEM
+	Popped _var131
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var131}
+TUPLE2
+	Popped {'x': _var131}
+	Popped None
+	Pushed (None, {'x': _var131})
+BUILD
+	_var132 = _var0
+	_var132.__setstate__((None, {'x': _var131}))
+	Popped (None, {'x': _var131})
+	Popped _var0
+	Pushed _var132
+POP
+	Popped _var132
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var131
+	Pushed (_var131, {})
+REDUCE
+	_var133 = d.get(_var131, {})
+	Popped (_var131, {})
+	Popped d.get
+	Pushed _var133
+PUT
+	Memo index 2 changed from _var131 to _var133
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var133
+SETITEM
+	Popped _var133
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var133}
+TUPLE2
+	Popped {'d': _var133}
+	Popped None
+	Pushed (None, {'d': _var133})
+BUILD
+	_var134 = _var0
+	_var134.__setstate__((None, {'d': _var133}))
+	Popped (None, {'d': _var133})
+	Popped _var0
+	Pushed _var134
+POP
+	Popped _var134
+POP
+	Popped _var133
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var135 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var135
+TUPLE1
+	Popped _var135
+	Pushed (_var135,)
+REDUCE
+	_var136 = x.__xor__(_var135)
+	Popped (_var135,)
+	Popped x.__xor__
+	Pushed _var136
+PUT
+	Memo index 2 changed from _var133 to _var136
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var136
+SETITEM
+	Popped _var136
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var136}
+TUPLE2
+	Popped {'x': _var136}
+	Popped None
+	Pushed (None, {'x': _var136})
+BUILD
+	_var137 = _var0
+	_var137.__setstate__((None, {'x': _var136}))
+	Popped (None, {'x': _var136})
+	Popped _var0
+	Pushed _var137
+POP
+	Popped _var137
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var136
+	Pushed (_var136, {})
+REDUCE
+	_var138 = d.get(_var136, {})
+	Popped (_var136, {})
+	Popped d.get
+	Pushed _var138
+PUT
+	Memo index 2 changed from _var136 to _var138
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var138
+SETITEM
+	Popped _var138
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var138}
+TUPLE2
+	Popped {'d': _var138}
+	Popped None
+	Pushed (None, {'d': _var138})
+BUILD
+	_var139 = _var0
+	_var139.__setstate__((None, {'d': _var138}))
+	Popped (None, {'d': _var138})
+	Popped _var0
+	Pushed _var139
+POP
+	Popped _var139
+POP
+	Popped _var138
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var140 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var140
+TUPLE1
+	Popped _var140
+	Pushed (_var140,)
+REDUCE
+	_var141 = x.__xor__(_var140)
+	Popped (_var140,)
+	Popped x.__xor__
+	Pushed _var141
+PUT
+	Memo index 2 changed from _var138 to _var141
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var141
+SETITEM
+	Popped _var141
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var141}
+TUPLE2
+	Popped {'x': _var141}
+	Popped None
+	Pushed (None, {'x': _var141})
+BUILD
+	_var142 = _var0
+	_var142.__setstate__((None, {'x': _var141}))
+	Popped (None, {'x': _var141})
+	Popped _var0
+	Pushed _var142
+POP
+	Popped _var142
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var141
+	Pushed (_var141, {})
+REDUCE
+	_var143 = d.get(_var141, {})
+	Popped (_var141, {})
+	Popped d.get
+	Pushed _var143
+PUT
+	Memo index 2 changed from _var141 to _var143
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var143
+SETITEM
+	Popped _var143
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var143}
+TUPLE2
+	Popped {'d': _var143}
+	Popped None
+	Pushed (None, {'d': _var143})
+BUILD
+	_var144 = _var0
+	_var144.__setstate__((None, {'d': _var143}))
+	Popped (None, {'d': _var143})
+	Popped _var0
+	Pushed _var144
+POP
+	Popped _var144
+POP
+	Popped _var143
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var145 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var145
+TUPLE1
+	Popped _var145
+	Pushed (_var145,)
+REDUCE
+	_var146 = x.__xor__(_var145)
+	Popped (_var145,)
+	Popped x.__xor__
+	Pushed _var146
+PUT
+	Memo index 2 changed from _var143 to _var146
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var146
+SETITEM
+	Popped _var146
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var146}
+TUPLE2
+	Popped {'x': _var146}
+	Popped None
+	Pushed (None, {'x': _var146})
+BUILD
+	_var147 = _var0
+	_var147.__setstate__((None, {'x': _var146}))
+	Popped (None, {'x': _var146})
+	Popped _var0
+	Pushed _var147
+POP
+	Popped _var147
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var146
+	Pushed (_var146, {})
+REDUCE
+	_var148 = d.get(_var146, {})
+	Popped (_var146, {})
+	Popped d.get
+	Pushed _var148
+PUT
+	Memo index 2 changed from _var146 to _var148
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var148
+SETITEM
+	Popped _var148
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var148}
+TUPLE2
+	Popped {'d': _var148}
+	Popped None
+	Pushed (None, {'d': _var148})
+BUILD
+	_var149 = _var0
+	_var149.__setstate__((None, {'d': _var148}))
+	Popped (None, {'d': _var148})
+	Popped _var0
+	Pushed _var149
+POP
+	Popped _var149
+POP
+	Popped _var148
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'x.__xor__'
+STACK_GLOBAL
+	from t import x.__xor__
+	Popped 'x.__xor__'
+	Popped 't'
+	Pushed x.__xor__
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'i.pop'
+STACK_GLOBAL
+	from t import i.pop
+	Popped 'i.pop'
+	Popped 't'
+	Pushed i.pop
+EMPTY_TUPLE
+	Pushed ()
+REDUCE
+	_var150 = i.pop()
+	Popped ()
+	Popped i.pop
+	Pushed _var150
+TUPLE1
+	Popped _var150
+	Pushed (_var150,)
+REDUCE
+	_var151 = x.__xor__(_var150)
+	Popped (_var150,)
+	Popped x.__xor__
+	Pushed _var151
+PUT
+	Memo index 2 changed from _var148 to _var151
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'x'
+BINGET
+	Pushed _var151
+SETITEM
+	Popped _var151
+	Popped 'x'
+	Popped {}
+	Pushed {'x': _var151}
+TUPLE2
+	Popped {'x': _var151}
+	Popped None
+	Pushed (None, {'x': _var151})
+BUILD
+	_var152 = _var0
+	_var152.__setstate__((None, {'x': _var151}))
+	Popped (None, {'x': _var151})
+	Popped _var0
+	Pushed _var152
+POP
+	Popped _var152
+EMPTY_DICT
+	Pushed {}
+TUPLE2
+	Popped {}
+	Popped _var151
+	Pushed (_var151, {})
+REDUCE
+	_var153 = d.get(_var151, {})
+	Popped (_var151, {})
+	Popped d.get
+	Pushed _var153
+PUT
+	Memo index 2 changed from _var151 to _var153
+BINGET
+	Pushed _var0
+NONE
+	Pushed None
+EMPTY_DICT
+	Pushed {}
+BINGET
+	Pushed 'd'
+BINGET
+	Pushed _var153
+SETITEM
+	Popped _var153
+	Popped 'd'
+	Popped {}
+	Pushed {'d': _var153}
+TUPLE2
+	Popped {'d': _var153}
+	Popped None
+	Pushed (None, {'d': _var153})
+BUILD
+	_var154 = _var0
+	_var154.__setstate__((None, {'d': _var153}))
+	Popped (None, {'d': _var153})
+	Popped _var0
+	Pushed _var154
+POP
+	Popped _var154
+POP
+	Popped _var153
+BINGET
+	Pushed print
+BINGET
+	Pushed 't'
+BINGET
+	Pushed 'd.get'
+STACK_GLOBAL
+	from t import d.get
+	Popped 'd.get'
+	Popped 't'
+	Pushed d.get
+NONE
+	Pushed None
+SHORT_BINUNICODE
+	Pushed 'Wrong... :('
+TUPLE2
+	Popped 'Wrong... :('
+	Popped None
+	Pushed (None, 'Wrong... :(')
+REDUCE
+	_var155 = d.get(None, 'Wrong... :(')
+	Popped (None, 'Wrong... :(')
+	Popped d.get
+	Pushed _var155
+TUPLE1
+	Popped _var155
+	Pushed (_var155,)
+REDUCE
+	_var156 = print(_var155)
+	Popped (_var155,)
+	Popped print
+	Pushed _var156
+STOP
+	result0 = _var156
+	Popped _var156
+from sys import modules
+_var0 = type('', (), {})
+_var1 = modules
+_var1['t'] = _var0
+_var2 = _var0
+_var2.__setstate__((None, {'b': print}))
+from t import b.__self__
+_var3 = _var0
+_var3.__setstate__((None, {'b': b.__self__}))
+_var4 = _var0
+_var4.__setstate__((None, {'i': [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -42]}))
+from t import i.extend
+from t import b.map
+from t import b.ord
+from t import b.input
+_var5 = b.input('Flag? ')
+_var6 = b.map(b.ord, _var5)
+_var7 = i.extend(_var6)
+_var8 = _var0
+_var8.__setstate__((None, {'d': {674: {716: {764: {655: {699: {648: {763: {676: {663: {763: {656: {755: {706: {658: {717: {675: {658: {717: {672: {656: {756: {711: {693: {645: {711: {700: {753: {679: {746: {None: 'Correct!'}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}}))
+_var9 = _var0
+_var9.__setstate__((None, {'x': 735}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var10 = i.pop()
+_var11 = x.__xor__(_var10)
+_var12 = _var0
+_var12.__setstate__((None, {'x': _var11}))
+_var13 = d.get(_var11, {})
+_var14 = _var0
+_var14.__setstate__((None, {'d': _var13}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var15 = i.pop()
+_var16 = x.__xor__(_var15)
+_var17 = _var0
+_var17.__setstate__((None, {'x': _var16}))
+_var18 = d.get(_var16, {})
+_var19 = _var0
+_var19.__setstate__((None, {'d': _var18}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var20 = i.pop()
+_var21 = x.__xor__(_var20)
+_var22 = _var0
+_var22.__setstate__((None, {'x': _var21}))
+_var23 = d.get(_var21, {})
+_var24 = _var0
+_var24.__setstate__((None, {'d': _var23}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var25 = i.pop()
+_var26 = x.__xor__(_var25)
+_var27 = _var0
+_var27.__setstate__((None, {'x': _var26}))
+_var28 = d.get(_var26, {})
+_var29 = _var0
+_var29.__setstate__((None, {'d': _var28}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var30 = i.pop()
+_var31 = x.__xor__(_var30)
+_var32 = _var0
+_var32.__setstate__((None, {'x': _var31}))
+_var33 = d.get(_var31, {})
+_var34 = _var0
+_var34.__setstate__((None, {'d': _var33}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var35 = i.pop()
+_var36 = x.__xor__(_var35)
+_var37 = _var0
+_var37.__setstate__((None, {'x': _var36}))
+_var38 = d.get(_var36, {})
+_var39 = _var0
+_var39.__setstate__((None, {'d': _var38}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var40 = i.pop()
+_var41 = x.__xor__(_var40)
+_var42 = _var0
+_var42.__setstate__((None, {'x': _var41}))
+_var43 = d.get(_var41, {})
+_var44 = _var0
+_var44.__setstate__((None, {'d': _var43}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var45 = i.pop()
+_var46 = x.__xor__(_var45)
+_var47 = _var0
+_var47.__setstate__((None, {'x': _var46}))
+_var48 = d.get(_var46, {})
+_var49 = _var0
+_var49.__setstate__((None, {'d': _var48}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var50 = i.pop()
+_var51 = x.__xor__(_var50)
+_var52 = _var0
+_var52.__setstate__((None, {'x': _var51}))
+_var53 = d.get(_var51, {})
+_var54 = _var0
+_var54.__setstate__((None, {'d': _var53}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var55 = i.pop()
+_var56 = x.__xor__(_var55)
+_var57 = _var0
+_var57.__setstate__((None, {'x': _var56}))
+_var58 = d.get(_var56, {})
+_var59 = _var0
+_var59.__setstate__((None, {'d': _var58}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var60 = i.pop()
+_var61 = x.__xor__(_var60)
+_var62 = _var0
+_var62.__setstate__((None, {'x': _var61}))
+_var63 = d.get(_var61, {})
+_var64 = _var0
+_var64.__setstate__((None, {'d': _var63}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var65 = i.pop()
+_var66 = x.__xor__(_var65)
+_var67 = _var0
+_var67.__setstate__((None, {'x': _var66}))
+_var68 = d.get(_var66, {})
+_var69 = _var0
+_var69.__setstate__((None, {'d': _var68}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var70 = i.pop()
+_var71 = x.__xor__(_var70)
+_var72 = _var0
+_var72.__setstate__((None, {'x': _var71}))
+_var73 = d.get(_var71, {})
+_var74 = _var0
+_var74.__setstate__((None, {'d': _var73}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var75 = i.pop()
+_var76 = x.__xor__(_var75)
+_var77 = _var0
+_var77.__setstate__((None, {'x': _var76}))
+_var78 = d.get(_var76, {})
+_var79 = _var0
+_var79.__setstate__((None, {'d': _var78}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var80 = i.pop()
+_var81 = x.__xor__(_var80)
+_var82 = _var0
+_var82.__setstate__((None, {'x': _var81}))
+_var83 = d.get(_var81, {})
+_var84 = _var0
+_var84.__setstate__((None, {'d': _var83}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var85 = i.pop()
+_var86 = x.__xor__(_var85)
+_var87 = _var0
+_var87.__setstate__((None, {'x': _var86}))
+_var88 = d.get(_var86, {})
+_var89 = _var0
+_var89.__setstate__((None, {'d': _var88}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var90 = i.pop()
+_var91 = x.__xor__(_var90)
+_var92 = _var0
+_var92.__setstate__((None, {'x': _var91}))
+_var93 = d.get(_var91, {})
+_var94 = _var0
+_var94.__setstate__((None, {'d': _var93}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var95 = i.pop()
+_var96 = x.__xor__(_var95)
+_var97 = _var0
+_var97.__setstate__((None, {'x': _var96}))
+_var98 = d.get(_var96, {})
+_var99 = _var0
+_var99.__setstate__((None, {'d': _var98}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var100 = i.pop()
+_var101 = x.__xor__(_var100)
+_var102 = _var0
+_var102.__setstate__((None, {'x': _var101}))
+_var103 = d.get(_var101, {})
+_var104 = _var0
+_var104.__setstate__((None, {'d': _var103}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var105 = i.pop()
+_var106 = x.__xor__(_var105)
+_var107 = _var0
+_var107.__setstate__((None, {'x': _var106}))
+_var108 = d.get(_var106, {})
+_var109 = _var0
+_var109.__setstate__((None, {'d': _var108}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var110 = i.pop()
+_var111 = x.__xor__(_var110)
+_var112 = _var0
+_var112.__setstate__((None, {'x': _var111}))
+_var113 = d.get(_var111, {})
+_var114 = _var0
+_var114.__setstate__((None, {'d': _var113}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var115 = i.pop()
+_var116 = x.__xor__(_var115)
+_var117 = _var0
+_var117.__setstate__((None, {'x': _var116}))
+_var118 = d.get(_var116, {})
+_var119 = _var0
+_var119.__setstate__((None, {'d': _var118}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var120 = i.pop()
+_var121 = x.__xor__(_var120)
+_var122 = _var0
+_var122.__setstate__((None, {'x': _var121}))
+_var123 = d.get(_var121, {})
+_var124 = _var0
+_var124.__setstate__((None, {'d': _var123}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var125 = i.pop()
+_var126 = x.__xor__(_var125)
+_var127 = _var0
+_var127.__setstate__((None, {'x': _var126}))
+_var128 = d.get(_var126, {})
+_var129 = _var0
+_var129.__setstate__((None, {'d': _var128}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var130 = i.pop()
+_var131 = x.__xor__(_var130)
+_var132 = _var0
+_var132.__setstate__((None, {'x': _var131}))
+_var133 = d.get(_var131, {})
+_var134 = _var0
+_var134.__setstate__((None, {'d': _var133}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var135 = i.pop()
+_var136 = x.__xor__(_var135)
+_var137 = _var0
+_var137.__setstate__((None, {'x': _var136}))
+_var138 = d.get(_var136, {})
+_var139 = _var0
+_var139.__setstate__((None, {'d': _var138}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var140 = i.pop()
+_var141 = x.__xor__(_var140)
+_var142 = _var0
+_var142.__setstate__((None, {'x': _var141}))
+_var143 = d.get(_var141, {})
+_var144 = _var0
+_var144.__setstate__((None, {'d': _var143}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var145 = i.pop()
+_var146 = x.__xor__(_var145)
+_var147 = _var0
+_var147.__setstate__((None, {'x': _var146}))
+_var148 = d.get(_var146, {})
+_var149 = _var0
+_var149.__setstate__((None, {'d': _var148}))
+from t import d.get
+from t import x.__xor__
+from t import i.pop
+_var150 = i.pop()
+_var151 = x.__xor__(_var150)
+_var152 = _var0
+_var152.__setstate__((None, {'x': _var151}))
+_var153 = d.get(_var151, {})
+_var154 = _var0
+_var154.__setstate__((None, {'d': _var153}))
+from t import d.get
+_var155 = d.get(None, 'Wrong... :(')
+_var156 = print(_var155)
+result0 = _var156

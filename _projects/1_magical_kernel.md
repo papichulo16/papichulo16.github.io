@@ -1,11 +1,9 @@
 ---
 layout: project
 title: "Magical Kernel"
-description: "Magical Kernel"
+description: "Hobby kernel made from scratch"
 project_tag: ctfs
 ---
-
-# {{ page.title }}
 
 <ul>
 {% assign posts = site.posts | where: "project", page.project_tag %}
@@ -15,4 +13,6 @@ project_tag: ctfs
   </li>
 {% endfor %}
 </ul>
+
+[source](www.github.com/papichulo16/magical-kernel/)
 
