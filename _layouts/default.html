@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{{ page.title }} | {{ site.title }}</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  {{ site.seo }}
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span>Projects ▾</span>
+        <div class="dropdown-content">
+          {% for project in site.projects %}
+            <a href="{{ project.url }}">{{ project.title }}</a>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    {{ content }}
+  </main>
+
+  <footer>
+    <hr>
+    © {{ site.time | date: "%Y" }} {{ site.title }}
+  </footer>
+</body>
+</html>
+

@@ -1,0 +1,12 @@
+title: "papichulo16"
+description: "blog/writeup/project site"
+theme: minima
+
+collections:
+  projects:
+    output: true
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
