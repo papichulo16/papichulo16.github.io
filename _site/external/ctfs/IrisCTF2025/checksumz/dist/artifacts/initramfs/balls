@@ -1,4 +1,0 @@
-#!/bin/sh
-
-cp /dev/vda /tmp/flag
-cat /tmp/flag
