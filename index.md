@@ -4,7 +4,7 @@ title: Home
 ---
 
 <div  class="center">
-    <h1> papichulo16 (Luis Abraham) </h1>
+    <h1> Luis Abraham (papichulo16) </h1>
     <img src="/assets/img/luis.jpeg" alt="me" class="self-img">
     <p>This picture is ironic</p>
 </div>
