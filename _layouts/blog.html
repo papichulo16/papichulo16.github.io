@@ -1,0 +1,29 @@
+---
+layout: default
+---
+
+<article class="blog-post">
+  <h1>{{ page.title }}</h1>
+  <p class="post-date">{{ page.date | date: "%B %d, %Y" }}</p>
+
+  <div class="post-content">
+    {{ content }}
+  </div>
+</article>
+
+<style>
+.blog-post {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+.post-date {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.post-content img {
+  max-width: 100%;
+}
+</style>
+

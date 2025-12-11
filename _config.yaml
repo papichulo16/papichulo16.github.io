@@ -5,6 +5,9 @@ theme: minima
 collections:
   projects:
     output: true
+  blogs:
+    output: true
+    permalink: /blogs/:name/
 
 plugins:
   - jekyll-feed

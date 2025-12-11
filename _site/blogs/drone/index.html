@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>drone | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups (blogs)</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="blog-post">
+  <h1>drone</h1>
+  <p class="post-date">October 21, 2024</p>
+
+  <div class="post-content">
+    <p><a href="https://github.com/papichulo16/ctf-stuff/tree/main/SunshineCTF/drone/">source</a></p>
+
+<p>This challenge was pretty fun, and definitely learned a good lesson.</p>
+
+<p>So this challenge is basically just custom instructions sent to a drone and eventually you will be able to find a bug somewhere. At first (and for quite a while) I tried to to it in Ghidra, the problem is that it had a problem with the jumptable and it became a pain.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>/* WARNING: Could not recover jumptable at 0x0040139a. Too many branches */
+</code></pre></div></div>
+
+<p>Also here is the command I ran to get all the commands:</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>strings drone.bin | rg <span class="s2">"^[A-Z]{4}$"</span> <span class="o">&gt;</span> commands_list
+</code></pre></div></div>
+
+<p>For a while I did try to go through it statically, and I actually learned quite a bit about dealing with this kind of problem. But after a bit, I just decided to run ltrace on the binary, play with the binary, and see when I would find something interesting.</p>
+
+<p>It wasn’t that long after when I found that if you turn <code class="language-plaintext highlighter-rouge">SAFE</code> mode off, and then call <code class="language-plaintext highlighter-rouge">CAMO</code>, you can actually overflow into the stack. Here is the overflow code.</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">void</span> <span class="nf">deprecated_feedback</span><span class="p">(</span><span class="kt">void</span><span class="p">)</span>
+
+<span class="p">{</span>
+  <span class="n">undefined</span> <span class="n">local_108</span> <span class="p">[</span><span class="mi">256</span><span class="p">];</span>
+  
+  <span class="k">if</span> <span class="p">(</span><span class="n">DAT_004067e8</span> <span class="o">==</span> <span class="sc">'\0'</span><span class="p">)</span> <span class="p">{</span>
+    <span class="n">puts</span><span class="p">(</span><span class="s">"&lt;&lt;&lt; Feedback only available in unSAFE state"</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">else</span> <span class="p">{</span>
+    <span class="n">printf</span><span class="p">(</span><span class="s">"Leave feedback comments for the developers &gt;&gt;&gt; "</span><span class="p">);</span>
+    <span class="n">read</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="n">local_108</span><span class="p">,</span><span class="mh">0x200</span><span class="p">);</span>
+  <span class="p">}</span>
+  <span class="k">return</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>With this you can just do <code class="language-plaintext highlighter-rouge">ret2system</code> and win.</p>
+
+<p>After this challenge I would like to make a shirt that says <code class="language-plaintext highlighter-rouge">UNRECOVERED_JUMPTABLE</code> and then a Ghidra logo, because I think it would be funny.</p>
+
+
+  </div>
+</article>
+
+<style>
+.blog-post {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+.post-date {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.post-content img {
+  max-width: 100%;
+}
+</style>
+
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

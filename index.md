@@ -22,3 +22,5 @@ title: Home
  <li> Other cool things </li>
 </ul>
 
+<p>Check out the <a href="/projects">/projects page</a> to look at my projects and blogposts.</p>
+
