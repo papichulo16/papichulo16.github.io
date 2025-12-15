@@ -2,7 +2,7 @@
 layout: blog
 title: "strings only"
 date: 2024-09-24 
-tags: [writeups]
+tags: [ctf]
 description: "google poison null byte/unsafe unlink"
 ---
 

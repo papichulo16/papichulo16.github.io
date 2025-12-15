@@ -2,7 +2,7 @@
 layout: blog
 title: "vip"
 date: 2024-09-09
-tags: [writeups]
+tags: [ctf]
 description: "command injection with extra steps"
 ---
 

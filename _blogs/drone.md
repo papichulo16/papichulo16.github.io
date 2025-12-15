@@ -2,7 +2,7 @@
 layout: blog
 title: "drone"
 date: 2024-10-21
-tags: [writeups]
+tags: [ctf]
 description: "custom commands that lead to a ret2syscall"
 ---
 

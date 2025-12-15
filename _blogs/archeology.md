@@ -2,7 +2,7 @@
 layout: blog
 title: "archeology"
 date: 2024-09-10
-tags: [writeups]
+tags: [ctf]
 description: "custom VM reversing challenge"
 ---
 

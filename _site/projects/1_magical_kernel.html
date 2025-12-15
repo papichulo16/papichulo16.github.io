@@ -2,23 +2,24 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Magical Kernel | papichulo16</title>
+  <title>Magical Kernel (blogs) | papichulo16</title>
   <link rel="stylesheet" href="/assets/css/style.css">
   
 </head>
 <body>
   <nav class="navbar">
-    <a class="menu home-link" href="/"><img src="/assets/img/chavo.png" alt="El chavo" class="pfp-img">papichulo16</a>
+    <a class="menu home-link" href="https://github.com/papichulo16"><img src="/assets/img/chavo.png" alt="gh pfp" class="pfp-img">GitHub</a>
 
     <div class="nav-right">
-      <a href="https://github.com/papichulo16">Github</a>
+      <a href="/">Home</a>
       <a href="/contact">Contact</a>
       <a href="/reviews">Reviews</a>
+      <a href="/blogs">Blogs</a>
       <div class="dropdown">
         <span><a href="/projects">Projects ▾</a></span>
         <div class="dropdown-content">
           
-            <a href="/projects/1_magical_kernel.html">Magical Kernel</a>
+            <a href="/projects/1_magical_kernel.html">Magical Kernel (blogs)</a>
           
             <a href="/projects/3_ctf_writeups.html">PWN Writeups (blogs)</a>
           
@@ -31,16 +32,45 @@
   <hr>
 
   <main>
-    <h1>Magical Kernel</h1>
+    <h1>Magical Kernel (blogs)</h1>
 <p>Hobby kernel made from scratch</p>
 
 <div>
-  <ul>
+  <h3 id="intro">Intro</h3>
+<p>I wanted to learn more about how operating systems work internally so I decided to make my own <code class="language-plaintext highlighter-rouge">64-bit x86_64 OS</code>. I only used the internet and AI to help me understand theoretical concepts and generate trivial pieces of code like scancode lookup tables. Outside of that all code was written by me so I could properly learn as much as possible. I also mainly used the book <code class="language-plaintext highlighter-rouge">Operating Systems Concepts: Three Easy Pieces</code> to also guide me a bit.</p>
 
+<p>I decided to blog my process and below are the blogs. Also here is the <a href="https://www.github.com/papichulo16/magical-kernel/">source</a>.</p>
 
-</ul>
+<h3 id="blogs">Blogs</h3>
+<div class="writeup-list">
+  
 
-<p><a href="https://www.github.com/papichulo16/magical-kernel/">source</a></p>
+  
+  <a href="/blogs/k-sched/" class="writeup-card">
+    <div>
+      <h2>Tasks and Scheduler</h2>
+      <p class="date">October 21, 2025</p>
+      <p class="description">Created a round robin scheduler for multiple tasks</p>
+    </div>
+  </a>
+  
+  <a href="/blogs/k-boot/" class="writeup-card">
+    <div>
+      <h2>Interrupts and IO</h2>
+      <p class="date">September 16, 2025</p>
+      <p class="description">Printing helper functions, IDT, ISRs, the PIC, and keyboard interrupts</p>
+    </div>
+  </a>
+  
+  <a href="/blogs/k-setup/" class="writeup-card">
+    <div>
+      <h2>Introduction and Setup</h2>
+      <p class="date">September 02, 2025</p>
+      <p class="description">Backstory, build environment, and booting 64 bit mode into kernel_main() in C</p>
+    </div>
+  </a>
+  
+</div>
 
 
 </div>

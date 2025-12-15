@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Introduction and Setup | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="https://github.com/papichulo16"><img src="/assets/img/chavo.png" alt="gh pfp" class="pfp-img">GitHub</a>
+
+    <div class="nav-right">
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <a href="/blogs">Blogs</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel (blogs)</a>
+          
+            <a href="/projects/3_ctf_writeups.html">PWN Writeups (blogs)</a>
+          
+            <a href="/projects/4_crap.html">C.R.A.P</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="blog-post">
+  <h1>Introduction and Setup</h1>
+  <p class="post-date">September 02, 2025</p>
+
+  <div class="post-content">
+    <h2 id="intro">Intro</h2>
+<p>Alright Luis from the future (2025-12-14) wants to give a backstory as to why I started doing this, and what my motivation is going forward. So at the time of starting this project I was (and still am) a second year Computer Science student as well as working as a part time Junior Vulnerability Researcher (around 24 hours a week).</p>
+
+<p>Over the summer at work I volunteered myself to be put on a full-system emulation task because it looked challenging and fun, not realizing how little I knew about how OS’s actually worked. Because of this I had to really work hard to learn a lot of new hardware and OS concepts to even get the RTOS that I was emulating in QEMU started.</p>
+
+<p>Finding out that I had such a gap of knowledge made me really look forward to my OS class in university, but when I saw the syllabus, I realized that the class was more about UNIX programming than actual OS internals. So then I started this.</p>
+
+<p>Since I had a job plus I was a full time college student, I didn’t have much time to work on this outside of short couple hour bursts every few months/weeks. But as time has gone on I have really fallen in love working on this, so enjoy the progress and hopefully I continue working on this as years go on.</p>
+
+<p>Anyways that was the very lame story, this is more for myself to look back on (as well as these blogs tbh) so don’t dog on me. Anyways now to the cool stuff!!</p>
+
+<h2 id="setting-up-the-environment">Setting up the environment</h2>
+<h3 id="finding-a-starting-point">Finding a starting point</h3>
+<p>So the plan for this project is for it to run on QEMU so I can work on this wherever I want, in comparison if I were to put this on hardware. Since I have already worked on something relating to RTOSs in ARM, I have decided to do this in <code class="language-plaintext highlighter-rouge">x86_64</code> to have both CISC and RISC experience. Yippeee.</p>
+
+<p>Honestly, getting started is pretty daunting since I do not know everything that I need so decided I was going to take a mulligan and watch <a href="https://www.youtube.com/watch?v=FkrpUaGThTQ">this youtube video</a>. The good thing is that the guy that made this only has two videos, so after this I will be officially on my own.</p>
+
+<p>PLUS I am not a slacker that copy pastes code, so I will explain every bit of code this guy wrote on this video to show that.</p>
+
+<h3 id="bootloader-and-linker-script">Bootloader and linker script</h3>
+<p>So for the bootloader, we are going to go with <code class="language-plaintext highlighter-rouge">grub</code>. This means that I am putting a file in <code class="language-plaintext highlighter-rouge">targets/x86_64/iso/boot/grub/</code> called <code class="language-plaintext highlighter-rouge">grub.cfg</code> that will specify the following:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>set timeout=0
+set default=0
+
+menuentry "idk the kernel name yet" {
+  multiboot2 /boot/kernel.bin
+  boot
+}
+</code></pre></div></div>
+
+<p>This basically states that grub is not going to wait at all in the booting stage (timeout=0) and then that it will load the file in <code class="language-plaintext highlighter-rouge">targets/x86_64/iso/boot/kernel.bin</code>.</p>
+
+<p>As for the linker script, this is fairly straight forward as well since all I am doing is stating that the multiboot header and then my code will start in <code class="language-plaintext highlighter-rouge">0x1000000</code> since that is what is mapped out in the QEMU machine:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ENTRY(start)
+
+SECTIONS
+{
+  /* the operating system starts one megabyte in */
+  . = 0x1000000;
+
+  .boot :
+  {
+    KEEP(*(.multiboot_header))
+  }
+
+  .text :
+  {
+    *(.text)
+  }
+}
+</code></pre></div></div>
+
+<p>This can be found in this MMIO table (I will be continually referencing this as time goes on):</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>0x00000000 – 0x0009FFFF : Conventional RAM (usable)
+0x000A0000 – 0x000BFFFF : Video memory / VGA text mode
+0x000C0000 – 0x000FFFFF : BIOS ROM / system ROM
+0x00100000 – 0x07FFFFFF : Extended RAM (default 128 MB, configurable with -m)
+0x08000000 – 0x3FFFFFFF : Extended RAM continuation (depends on -m size)
+0x40000000 – 0xBFFFFFFF : PCI hole / MMIO for PCI devices
+0xC0000000 – 0xCFFFFFFF : PCI device MMIO regions
+0xD0000000 – 0xDFFFFFFF : Optional MMIO / device regions
+0xE0000000 – 0xEFFFFFFF : VGA MMIO / other device regions
+0xF0000000 – 0xFFFFFFFF : BIOS / reserved legacy system space
+</code></pre></div></div>
+
+<h3 id="docker-build-environment-and-makefile">Docker build environment and Makefile</h3>
+<p>So the guy in the video has an ARM machine so he needs to use a docker container to build things for intel, which is not my problem. Nonetheless I liked the idea of having a Dockerfile for easing the setup and build environment so I made my own. It is basic and can be found in <code class="language-plaintext highlighter-rouge">build/Dockerfile</code>.</p>
+
+<p>This it so that way when starting on any new machine all you have to do is build the docker environemnt to get all dependencies, mount the current directory into the image, and then run the Makefile from there. Super ez.</p>
+
+<p>Now for the Makefile, I got lazy and copied and pasted what he wrote. I know how to do this I just didnt really want to do it and was glad someone did it for me hahahhaa.</p>
+
+<p>All it does is it compiles all of the files in <code class="language-plaintext highlighter-rouge">src/impl/kernel/</code> and uses the files in <code class="language-plaintext highlighter-rouge">src/intf</code> as include files. Also it will assemble all of the <code class="language-plaintext highlighter-rouge">src/impl/x86_64</code> files when <code class="language-plaintext highlighter-rouge">build-x86_64</code> is used. Then it will link all of the object files into <code class="language-plaintext highlighter-rouge">kernel.bin</code></p>
+
+<p>From here we are ready to write our boot code in the <code class="language-plaintext highlighter-rouge">x86_64</code> directory and get started.</p>
+
+<h2 id="booting">booting</h2>
+<h3 id="multiboot-header">multiboot header</h3>
+<p>First we need to set up the multiboot header specified in the linker file. This is fairly straightforward, just write the following as 32 bit values:</p>
+<ul>
+  <li>a multiboot2 magic number of <code class="language-plaintext highlighter-rouge">0xe85250d6</code></li>
+  <li>NULL to specify protected mode</li>
+  <li>header length</li>
+  <li>a checksum calculated like so: <code class="language-plaintext highlighter-rouge">0x100000000 - (0xe85250d6 + (_end_header - _start_header))</code></li>
+  <li>5x NULL values for the end tag</li>
+</ul>
+
+<p>Now we are ready to work on boot.asm</p>
+
+<h3 id="bootasm">boot.asm</h3>
+<p>Alright to boot into 64 bit long mode, we are going to need to make these checks are supported:</p>
+<ul>
+  <li>multiboot is good</li>
+  <li>cpuid flag</li>
+  <li>long mode</li>
+</ul>
+
+<p>Then from there we need to set up a very basic page table layout, which I have no idea how it works, but I will learn when I get to that part for sure.</p>
+
+<p>Also I need to set up a Global Descriptor Table. I had never heard of this but I looked it up, and it has to do with the segment registers. This seems like it is just a weird feature that is not needed anymore honestly, I have worked with segment registers in my Microcomputer Systems class when we worked with 16-bit intel on the 8086 Microprocessor. It seems like it is just an evolution thing, I can explain it right here:</p>
+<ul>
+  <li>In 16 bit MPs, there were 20 address lines but a 16 line data bus and registers. So to be able to control and use those higher 4 address lines, they would grab whatever segment register you are using for the memory access (Stack, Data, Code, etc) and then multiply it by 0x10 and then add it to the current pointer used.</li>
+  <li>Then when 32 bit processors came around, the GDT came. This time around it turned the segment registers to ignify an offset into that table which would then hold info about the region of memory accessed as well as its offset.</li>
+  <li>Now in 64 bit, the GDT and CS registers are really only used to signify the protections and flags for whatever segment is being used in the same way as 32 bit.</li>
+</ul>
+
+<p>This took a second to understand because I was like “… huh?? thats it???”, but I guess that’s neat!</p>
+
+<p>Anyways I did all of this, filling up all L2 page table entries with an address, setting up a stack, setting up the code segment GDT entry, and then loading all of the initialized segments with their respective registers that needed to be used.</p>
+
+<p>From there I called <code class="language-plaintext highlighter-rouge">long_mode_start</code> in <code class="language-plaintext highlighter-rouge">main64.asm</code> which would clear all segment registers and then call <code class="language-plaintext highlighter-rouge">kernel_main()</code>. BOOM!!!</p>
+
+  </div>
+</article>
+
+<style>
+.blog-post {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+.post-date {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.post-content img {
+  max-width: 100%;
+}
+</style>
+
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

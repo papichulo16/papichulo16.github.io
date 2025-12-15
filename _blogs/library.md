@@ -2,7 +2,7 @@
 layout: blog
 title: "library"
 date: 2024-11-16
-tags: [writeups]
+tags: [ctf]
 description: "heap challenge with double chunks"
 ---
 

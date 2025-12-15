@@ -2,7 +2,7 @@
 layout: blog
 title: "kernel rop"
 date: 2024-12-20
-tags: [writeups]
+tags: [ctf]
 description: "ret2usr and linux kernel rop"
 ---
 

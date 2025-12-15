@@ -2,7 +2,7 @@
 layout: blog
 title: "flightscript"
 date: 2024-09-23
-tags: [writeups]
+tags: [ctf]
 description: "largebins attack"
 ---
 

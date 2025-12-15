@@ -2,7 +2,7 @@
 layout: blog
 title: "nolibc"
 date: 2024-09-04
-tags: [writeups]
+tags: [ctf]
 description: "custom heap challenge"
 ---
 

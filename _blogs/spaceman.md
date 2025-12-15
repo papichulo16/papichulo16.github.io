@@ -2,7 +2,7 @@
 layout: blog
 title: "spaceman"
 date: 2024-09-30
-tags: [writeups]
+tags: [ctf]
 description: "RISC-V pwn challenge"
 ---
 

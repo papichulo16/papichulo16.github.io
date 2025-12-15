@@ -2,7 +2,7 @@
 layout: blog
 title: "screenwriter"
 date: 2025-01-08
-tags: [writeups]
+tags: [ctf]
 description: "FSOP challenge"
 ---
 

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tasks and Scheduler | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="https://github.com/papichulo16"><img src="/assets/img/chavo.png" alt="gh pfp" class="pfp-img">GitHub</a>
+
+    <div class="nav-right">
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <a href="/blogs">Blogs</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel (blogs)</a>
+          
+            <a href="/projects/3_ctf_writeups.html">PWN Writeups (blogs)</a>
+          
+            <a href="/projects/4_crap.html">C.R.A.P</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="blog-post">
+  <h1>Tasks and Scheduler</h1>
+  <p class="post-date">October 21, 2025</p>
+
+  <div class="post-content">
+    <h2 id="initial">Initial</h2>
+<p>Alright so I have been very busy this past month with midterms and work going like crazy, but we are so back. Now that I have interrupts working I can program the Programmable Interval Timer (PIT) to fire timer interrupts so that I can have a round robin scheduler! Lets gooo multitasking!!!!</p>
+
+<p>First I set up a temporary page allocator with a large buffer in global memory because I am going to have to learn about that and page tables and such… so I am pushing it off until after this. It is nothing crazy, just got something working loosely based on the fact that I have good understanding of how the GLIBC heap and the Linux Kernel slabs work thanks to my exploitation background.</p>
+
+<p>Alright cool lets get started</p>
+
+<h2 id="scheduler">Scheduler</h2>
+<p>Before I get started, I want to say that everything named in my code is under the name of “thread”. I will be vulnerable and say I did not understand (or honestly cared about) the difference between “task” and “thread” until not too long ago that I looked it up.</p>
+
+<p>Since I am only using one CPU core for the time being until I decide to implement Symmetric Multi-Processing (SMP), the implementation I made is technically using tasks and not threads… and for that I will tell you to respectfully fuck off!!!</p>
+
+<h3 id="context-save--restore">Context save + restore</h3>
+<p>So obviously the most important part of a scheduler is the fact that it must be able to save the whole state of a task at the time of an interrupt before switching to a new task, and then restoring it once it is that task’s turn again. This is the struct I am using for ctx save and restore:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct regs_context {
+    uint64_t r15, r14, r13, r12, r11, r10, r9, r8;
+    uint64_t rsi, rdi, rbp, rdx, rcx, rbx, rax;
+    uint64_t rip, cs, rflags, rsp, ss;
+};
+</code></pre></div></div>
+
+<p>So for that I want to tell you something very silly, at first I MANUALLY calculated all offsets in the stack and wrote it to the other MANUALLY calculated offset in the <code class="language-plaintext highlighter-rouge">regs_context</code> struct HAHAHA:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void mk_thread_ctx_save(struct regs_context* ctx) {
+
+    asm volatile (
+        ".intel_syntax noprefix\n\t"
+        "push rax\n\t"  
+
+        "mov rax, qword ptr [rsp + 0xa0]\n\t"  // r15
+        "mov qword ptr [rdi + 0x00], rax\n\t"
+
+        "mov rax, qword ptr [rsp + 0x98]\n\t"  // r14
+        "mov qword ptr [rdi + 0x08], rax\n\t"
+
+        "mov rax, qword ptr [rsp + 0x90]\n\t"  // r13
+        "mov qword ptr [rdi + 0x10], rax\n\t"
+
+	... MORE OF THIS ...
+
+        "mov rax, qword ptr [rsp + 0xb8]\n\t"  // rflags
+        "mov qword ptr [rdi + 0x88], rax\n\t"
+
+        "pop rax\n\t"  // rax
+        "mov qword ptr [rdi + 0x70], rax\n\t"
+
+       ".att_syntax prefix\n\t"
+        :
+        : "D"(ctx)
+        : "rax", "memory"
+    );
+}
+</code></pre></div></div>
+
+<p>Not only is this horribly disgusting and awful to debug, but also it made it so that if I EVER pushed anything to the stack inside of the timer handler function I would have to also change those offsets!!! It wasn’t until a bit later that I got the epiphany to move the value of RSP into RDI before calling the timer handler function in C and then using that as a stack pointer parameter for the state before the function call!!! Here is the same function but now nicer:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void mk_thread_ctx_save_from_stack(struct regs_context* ctx, uint64_t* stack) {
+    ctx-&gt;rax = stack[0];
+    ctx-&gt;rbx = stack[1];
+    ctx-&gt;rcx = stack[2];
+    ctx-&gt;rdx = stack[3];
+    ctx-&gt;rbp = stack[4];
+    ctx-&gt;rdi = stack[5];
+    ctx-&gt;rsi = stack[6];
+    ctx-&gt;r8  = stack[7];
+    ctx-&gt;r9  = stack[8];
+    ctx-&gt;r10 = stack[9];
+    ctx-&gt;r11 = stack[10];
+    ctx-&gt;r12 = stack[11];
+    ctx-&gt;r13 = stack[12];
+    ctx-&gt;r14 = stack[13];
+    ctx-&gt;r15 = stack[14];
+    
+    // Interrupt frame
+    ctx-&gt;rip    = stack[15];
+    ctx-&gt;cs     = stack[16];
+    ctx-&gt;rflags = stack[17];
+
+    // CS &amp; 3 gives us the RPL (requested privilege level)
+    if ((ctx-&gt;cs &amp; 0x3) != 0) {
+        ctx-&gt;rsp = stack[18];
+        ctx-&gt;ss  = stack[19];
+    } else {
+        ctx-&gt;rsp = (uint64_t)(&amp;stack[15]);
+        
+        uint64_t current_ss;
+        asm volatile("mov %%ss, %0" : "=r"(current_ss));
+        ctx-&gt;ss = current_ss;
+    }
+}
+</code></pre></div></div>
+
+<p>So much nicer!!!</p>
+
+<h3 id="scheduler-1">Scheduler</h3>
+<p>I don’t want this blog to be crazy long so I will only go over the important things, things like thread create, thread kill, etc are self explanatory so I will disregard. I will say in thread create I use the temporary page allocator I talked about earlier to allocate a new stack for each task.</p>
+
+<p>In here, I will talk about two main important functions: the timer ISR and the context switch function. Here is the thread object structure:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>struct mk_thread_obj {
+    enum ThreadState state;
+    struct regs_context regs;
+
+    uint8_t started;
+    uint32_t time_slice;
+
+    void* entry;
+
+    uint8_t* stack_base;
+};
+</code></pre></div></div>
+
+<p>All the timer ISR function does is time slicing, initializing tasks that havent ran yet, and also switch context in between tasks if needed. This is the code:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>void mk_timer_int_handler(uint64_t* stack) {
+    
+    mk_working_thread = mk_get_working_thread();
+    
+    if (mk_working_thread-&gt;time_slice &gt; 0) {
+        mk_working_thread-&gt;time_slice -= 1;
+
+        mk_pic_send_eoi(0);
+
+        return;
+    }
+        
+    if (!mk_working_thread-&gt;started) {
+        mk_pic_send_eoi(0);
+        mk_working_thread-&gt;started = 1;
+
+        mk_thread_ctx_restore_from_stack(&amp;mk_working_thread-&gt;regs, stack);
+
+        return;
+    }
+    
+    mk_thread_ctx_save_from_stack(&amp;mk_working_thread-&gt;regs, stack);
+
+    mk_pic_send_eoi(0);
+
+    if (!mk_thread_ctx_switch()) {
+        mk_working_thread = mk_get_working_thread();
+
+        mk_thread_ctx_restore_from_stack(&amp;mk_working_thread-&gt;regs, stack);
+    }
+}
+</code></pre></div></div>
+
+<p>The context switch function will find the next ready thread in the ready queue, which is currently a set array in global memory, but once I have a slab allocator set up I will refactor all of this to use a linked list structure so there is unlimited tasks.</p>
+
+<p>Outside of that it works!! A lot of debugging but that is part of the process.</p>
+
+
+  </div>
+</article>
+
+<style>
+.blog-post {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+.post-date {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.post-content img {
+  max-width: 100%;
+}
+</style>
+
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+

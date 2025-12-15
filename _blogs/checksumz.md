@@ -2,7 +2,7 @@
 layout: blog
 title: "checksumz"
 date: 2025-02-20
-tags: [writeups]
+tags: [ctf]
 description: "read/write on kernel heap then modprobe path overwrite"
 ---
 

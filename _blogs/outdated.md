@@ -2,7 +2,7 @@
 layout: blog
 title: "outdated"
 date: 2025-08-18
-tags: [writeups]
+tags: [ctf]
 description: "MIPS global pointer overwrite"
 ---
 

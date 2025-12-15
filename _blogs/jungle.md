@@ -2,7 +2,7 @@
 layout: blog
 title: "jungle"
 date: 2024-10-21
-tags: [writeups]
+tags: [ctf]
 description: "basic tcache poisoning with sleeker bug"
 ---
 

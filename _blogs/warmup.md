@@ -2,7 +2,7 @@
 layout: blog
 title: "warmup"
 date: 2024-06-11
-tags: [writeups]
+tags: [ctf]
 description: "my first ever pwn solve, stack pivot to sigrop"
 ---
 
