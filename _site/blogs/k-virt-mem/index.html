@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Virtual Memory and Slab Allocator | papichulo16</title>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  
+</head>
+<body>
+  <nav class="navbar">
+    <a class="menu home-link" href="https://github.com/papichulo16"><img src="/assets/img/chavo.png" alt="gh pfp" class="pfp-img">GitHub</a>
+
+    <div class="nav-right">
+      <a href="/">Home</a>
+      <a href="/contact">Contact</a>
+      <a href="/reviews">Reviews</a>
+      <a href="/blogs">Blogs</a>
+      <div class="dropdown">
+        <span><a href="/projects">Projects ▾</a></span>
+        <div class="dropdown-content">
+          
+            <a href="/projects/1_magical_kernel.html">Magical Kernel (blogs)</a>
+          
+            <a href="/projects/3_ctf_writeups.html">PWN Writeups (blogs)</a>
+          
+            <a href="/projects/4_crap.html">C.R.A.P</a>
+          
+        </div>
+      </div>
+    </div>
+  </nav>
+  <hr>
+
+  <main>
+    <article class="blog-post">
+  <h1>Virtual Memory and Slab Allocator</h1>
+  <p class="post-date">November 17, 2025</p>
+
+  <div class="post-content">
+    <h2 id="intro">Intro</h2>
+<p>Alright this was another month of being busy later. Also this was indeed the scariest and most daunting topic yet, since I had NO IDEA about anything relating to page tables, virtual memory, TLBs, etc. Even though I was not able to write code on here very often, I did spend a decent amount of time on my phone researching about this every now and then.</p>
+
+<p>Now looking back, this is not so bad after all and I was being a scaredy cat.</p>
+
+<h2 id="virtual-memory">Virtual Memory</h2>
+<p>The way virtual memory works is by the OS setting up a page table structure and then the MMU in the CPU doing a page walk after every memory access to find the physical memory address. Obviously this is lengthy which is why the TLB exists. I am not going to explain this in grave detail since there are a lot of resources out there but I will make sure to at least show I understand.</p>
+
+<p>So the way that the MMU does the page walk is by reading the physical memory address in the <code class="language-plaintext highlighter-rouge">CR3</code> register and using that as the L4 page table, then it will use the higher 9 bits of the 48 bit virtual address to index into that table and then use the next entry as the L3 table. Then it will use the next 9 bits and so on until reaching L1 which will be the actual physical address accessed, and the last 12 bits will offset into that page.</p>
+
+<p>Also keep in mind (not knowing this wasted like 2 hours of my time debugging) that if the most significant bit of the 48 bit addr is set, so will all other higher order bits in the 64 bit address. This is because they want to add forward compatibility whenever they increase memory addressing or something.</p>
+
+<h3 id="changing-the-virtual-kernel-base-address">Changing the virtual kernel base address</h3>
+<p>First step to virtual memory was not creating a <code class="language-plaintext highlighter-rouge">vmmap()</code> implementation yet, but rather just messing around in the <code class="language-plaintext highlighter-rouge">boot.asm</code> file to understand how this works as well as to map the kernel vmmap in address <code class="language-plaintext highlighter-rouge">0xfffffff800000000</code> or something like that. I basically just made it so that the last index of the L4 table is what is being used rather than the first.</p>
+
+<p>For that I also had to change the linker so that it uses the virtual memory addresses I want. Also in boot mode I had to create a trampoline that will switch to 64 bit mode and THEN call <code class="language-plaintext highlighter-rouge">long_mode_start</code>. But then after that I had my kernel using virtual addresses rather than physical.</p>
+
+<h3 id="creating-the-page-allocator-and-vmmap">Creating the page allocator and vmmap</h3>
+<p>The page allocator was really easy, honestly easier than my temp page allocator implementation. All I had to do was return a pointer to an unused page and then set it to being used somewhere else. The remainder would be done by the vmmap.</p>
+
+<p>The way I made my vmmap function is by just recursively walking through a set path in the page tables until it finds a free L1 entry, if it doesn’t, then it will create a new L1, L2, or L3 to then allocate an L1 page table and then create a new entry.</p>
+
+<p>As of now physical memory still exists since I haven’t created a way to translate the read physical page table entry address and then find its virtual memory to modify. My plan is to just do some AVL tree or something to have to translate but as of now I just want to get THIS working and then later I will do it.</p>
+
+<p>This is the code:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+uint8_t* kern_get_next_free_l1_addr(uint8_t* p){
+    
+    // they wont allocate if the index already exists
+    alloc_l3_table((uint64_t) p);
+    alloc_l2_table((uint64_t) p);
+    alloc_l1_table((uint64_t) p);
+    
+    uint64_t* l1 = get_l1_table((uint64_t) p);
+    
+    for (; L1_INDEX((uint64_t) p) &lt; 512; p += (1 &lt;&lt; 12)) {
+        if (get_l1_idx((uint64_t) p) == 0)
+            return p;
+    }
+
+    // try again with a new l1 table index
+    return kern_get_next_free_l1_addr(p + (1 &lt;&lt; 12));
+}
+
+uint8_t* mk_vmmap_l1(uint8_t flags) {
+    uint8_t* p = kern_get_next_free_l1_addr((uint8_t *) KERNEL_DATA_VMA);
+    
+    if (!map_l1((uint64_t) p))
+        return p;
+    
+    return 0;
+}
+</code></pre></div></div>
+
+<p>Obviously I created the respective vmunmap function.</p>
+
+<h2 id="slab-allocator">Slab allocator</h2>
+<p>The way that I structured my slab allocator is very similar to the way the Linux Kernel does it. Since I have worked with it a decent amount when writing Linux Kernel exploits during CTFs, I was actually was actually able to this in a plane with no interwebz in an hour or so.</p>
+
+<p>Since for now I can only create one page and I don’t have a buddy allocator, I can only create objects of up to 4K divided by 2 because the objects still need metadata inside them, so 2K objects max. The way it is structured is I have cache nodes that have an array of buckets for different sizes and then they will hold linked lists with the slabs for that specific size, and each slab will hold as many objects as possible of that size.</p>
+
+<p>It is a very simple implementation that you can discern from these structure definitions alone:</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 8, 16, 32, 64, 128, 256, 512, 1024, 2048
+#define NUM_BUCKETS 9
+
+struct mk_slab_t {
+    uint8_t id;
+    uint32_t size;
+    uint32_t free_count;
+    uint32_t max;
+
+    struct mk_slab_t* next;
+    void* freelist_head;
+};
+
+struct mk_cache_node_t {
+    struct mk_slab_t* buckets[NUM_BUCKETS];
+};
+</code></pre></div></div>
+
+<p>Anyways now that I have dynamic allocation in the kernel… the world is my oyster!!</p>
+
+
+  </div>
+</article>
+
+<style>
+.blog-post {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+.post-date {
+  color: #777;
+  font-size: 0.9rem;
+  margin-bottom: 20px;
+}
+.post-content img {
+  max-width: 100%;
+}
+</style>
+
+
+  </main>
+
+  <footer>
+    <hr>
+    © 2025 papichulo16
+  </footer>
+</body>
+</html>
+
