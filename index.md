@@ -22,5 +22,14 @@ title: Home
  <li> Other cool things </li>
 </ul>
 
-<p>Check out the <a href="/projects">/projects page</a> to look at my projects and blogposts.</p>
+# Projects
+
+<div class="projects-grid">
+{% for p in site.projects %}
+  <a class="project-card" href="{{ p.url }}">
+    <h3>{{ p.title }}</h3>
+    <p>{{ p.description }}</p>
+  </a>
+{% endfor %}
+</div>
 
