@@ -1,7 +1,7 @@
 ---
 layout: project
 title: "RCA 1802 System Emulator"
-description: "System of Systems Emulator and Cross-Assembler for the RCA CDP1802a chip"
+description: "Embedded System Emulator for the RCA1802 chip"
 project_tag: ctfs
 ---
 
