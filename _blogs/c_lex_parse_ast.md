@@ -16,7 +16,7 @@ Anyways our initial plan was to use the dragon book, learn the concept, and impl
 
 So the class goal is to do part 1 of the book which goes over the fundamentals of compilation and by the end we should have a working compiler. I will be trying to speedrun this jawn so I can get to part 2 which goes over a bunch of optimization techniques because thats the meat and potatoes (tomatoes?) of compiler theory. I have seen dominator trees in my dreams, they're calling out to me.
 
-Lastly before I start, no I am not using AI. Why would anyone use AI on a "from scratch" project?? You're not gonna make the next `gcc` or `linux` from scatch bruh, the whole fun is that it is `your own` piece of shit implementation. If it is not a piece of shit then it doesn't have any charm (plus it ruins the purpose of learning). But I will say now that I have been slopmaxxing for senior project and (responsively?????) using AI at work the temptation is there. 
+Lastly before I start, no I am not using AI. Why would anyone use AI on a "from scratch" project?? You're not gonna make the next `gcc` or `linux` from scatch bruh, the whole fun is that it is `your own` piece of shit implementation. If it is not a piece of shit then it doesn't have any charm (plus it ruins the purpose of learning). But I will say now that I have been slopmaxxing for senior project and (responsively?????) using AI at work so the temptation is there. 
 
 ## Chp1: Intro
 
@@ -26,7 +26,7 @@ This chapter was more of a warmup exercise to get us ready, it was pretty fun. T
 
 This is where we start the compiler, throwing away the first part since we don't need it. This chapter was really fast, all I had to do was write like 30 lines of `lex` and that's it. Somehow I still fucked it up though and I didn't realize until I started testing the parser which made it a funny surprise. I flipped all of the open and close parentheses, brackets, and curly braces into the wrong tokens: 
 
-<img src="/assets/img/IMG_7683.jpeg" width="300" alt="messed up the tokens">
+<img src="/assets/img/IMG_7683.jpeg" width="600" alt="messed up the tokens">
 
 ## Chp3: Parsing
 
