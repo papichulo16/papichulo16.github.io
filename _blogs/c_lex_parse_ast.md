@@ -105,3 +105,5 @@ $ cat out
 ...
 ```
 
+Anyways now that I have a hopefully correct AST built out, I can get to the more fun parts which is code generation!! Obviously I still need semantic analysis but then from there I should be chillin.
+
