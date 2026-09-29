@@ -154,40 +154,42 @@ nav .menu {
   display: flex;
 }
 
-/* --- MOBILE NAVBAR --- */
+/* --- MOBILE NAVBAR (shrink to fit) --- */
 @media (max-width: 700px) {
   body {
-    padding: 1rem;
+    padding: 1rem 0.75rem;
   }
 
   .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.5rem;
+    gap: 0.25rem;
+  }
+
+  .navbar .menu {
+    font-size: 0.75rem;
+    gap: 0.35rem;
+  }
+
+  .pfp-img {
+    width: 28px;
+    height: 28px;
   }
 
   .nav-right {
-    flex-wrap: wrap;
-    gap: 0.25rem;
+    gap: 0;
   }
 
   .nav-right a,
   .nav-right span {
-    padding: 6px 8px;
+    font-size: 0.72rem;
+    padding: 4px 4px;
   }
 
   .dropdown-content {
     min-width: 0;
     width: max-content;
-    max-width: calc(100vw - 2rem);
-    right: auto;
-    left: 0;
+    max-width: calc(100vw - 1.5rem);
+    font-size: 0.8rem;
     z-index: 10;
-  }
-
-  /* tap-to-open on touch devices */
-  .dropdown:focus-within .dropdown-content {
-    display: flex;
   }
 }
 
