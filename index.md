@@ -11,14 +11,14 @@ title: Home
 
 <p>I am a part time Vulnerability Researcher while studying Computer Science at Florida Institute of Technology, estimated to graduate in Fall 2027.</p>
 
-<p>I really like low-level and bare-metal programming and computing. I started off with binary exploitation on CTF competitions and now I do other cool projects while also working. Here are some of the things I do:</p>
+<p>I love working on low-level systems and low-level software like Operating Systems, Hypervisors, Embedded Systems, etc. The less layers of abstraction the better. Here are some of the things I do:</p>
 
 <ul>
- <li> PWN (binex) and RE (rev eng)</li>
+ <li> PWN (binary exploitation) and RE (reverse engineering)</li>
+ <li> OS Development</li>
  <li> Embedded and Baseband VR</li>
  <li> VR on Low Level Network Stacks</li>
- <li> Emulation</li>
- <li> OS dev</li>
+ <li> Hardware/Software Emulation</li>
  <li> Other cool things </li>
 </ul>
 

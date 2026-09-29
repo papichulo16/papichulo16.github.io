@@ -29,6 +29,22 @@ line-height: 1.6;
   padding: 2rem;
 }
 
+/* Give desktop/tablet viewports more breathing room instead of a
+   fixed 900px column that leaves huge empty gutters on wide screens.
+   Phones stay under this breakpoint, so their layout is unaffected. */
+@media (min-width: 900px) {
+  body {
+    max-width: 1100px;
+    padding: 2rem 3rem;
+  }
+}
+
+@media (min-width: 1300px) {
+  body {
+    max-width: 1300px;
+  }
+}
+
 a {
   color: var(--accent);
   text-decoration: none;
