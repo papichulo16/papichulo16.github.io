@@ -57,5 +57,5 @@ I also needed to copy my `hello-hvc` directory into the `pkvm/` directory and wr
 
 With that, I had code running in EL2 and EL1! Now I just needed root on the phone to have the ability to write and run a userspace module that does the initial `ioctl()` call. I just used `Magisk`, there are plenty of resources that show you how to do it. 
 
-<img src="/assets/img/hello_el2.jpg" width="400" alt="Hello from EL2 image">
+<img src="/assets/img/hello_el2.jpg" width="600" alt="Hello from EL2 image">
 
