@@ -11,7 +11,7 @@ title: Home
 
 <p>I am a part time Vulnerability Researcher while studying Computer Science at Florida Institute of Technology, estimated to graduate in Fall 2027.</p>
 
-<p>I love working on low-level systems and low-level software like Operating Systems, Hypervisors, Embedded Systems, etc. The less layers of abstraction the better. Here are some of the things I do:</p>
+<p>I love working on low-level systems and low-level software like Operating Systems, Embedded Systems, Hypervisors, etc. Here are some of the things I do:</p>
 
 <ul>
  <li> PWN (binary exploitation) and RE (reverse engineering)</li>
