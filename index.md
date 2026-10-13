@@ -9,7 +9,7 @@ title: Home
     <p>This picture is ironic</p>
 </div>
 
-<p>I am a part time Vulnerability Researcher while studying Computer Science at Florida Institute of Technology, estimated to graduate in Fall 2027.</p>
+<p>I am a part time Vulnerability Researcher (full time during breaks) while studying Computer Science at Florida Institute of Technology.</p>
 
 <p>I love working on low-level systems and low-level software like Operating Systems, Embedded Systems, Hypervisors, etc. Here are some of the things I do:</p>
 
